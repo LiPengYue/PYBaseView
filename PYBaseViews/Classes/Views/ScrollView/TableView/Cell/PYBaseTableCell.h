@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,weak) UITableView *tableView;
 @property (nonatomic,strong) NSIndexPath *currentIndexPath;
 
-@property (nonatomic,weak) id <PYBaseTableViewCellDelegate> delegate;
+@property (nonatomic,weak) id <PYBaseTableCellDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END
