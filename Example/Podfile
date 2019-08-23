@@ -4,7 +4,7 @@ platform :ios, '8.0'
 
 target 'PYBaseView_Example' do
   pod 'PYBaseView', :path => '../'
-
+  pod 'PYBaseEventHandler'
   target 'PYBaseView_Tests' do
     inherit! :search_paths
 

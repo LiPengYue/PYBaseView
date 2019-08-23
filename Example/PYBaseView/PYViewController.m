@@ -7,23 +7,43 @@
 //
 
 #import "PYViewController.h"
+#import "PYMainView.h"
+#import <PYBaseEventHandler.h>
+#import <PYBaseView.h>
+
 
 @interface PYViewController ()
 
+@property (nonatomic,strong) PYMainView *mainView;
 @end
 
 @implementation PYViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    [self setupView];
+    [self registerEvents];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) setupView {
+    CGRect rect = self.view.bounds;
+    rect.origin.y = PYBaseSize.navTotalH;
+    rect.size.height = PYBaseSize.screen_navH;
+    self.mainView = [[PYMainView alloc] initWithFrame:rect];
+    [self.view addSubview:self.mainView];
+}
+
+- (void) registerEvents {
+    __weak typeof (self)weakSelf = self;
+    [NSObject receivedWithSender:self.mainView andSignal:^id(NSString *key, id message) {
+        if ([key isEqualToString:kClickMainView]) {
+            if ([message isKindOfClass:UIViewController.class]) {
+                UIViewController *vc = message;
+                [weakSelf.navigationController pushViewController:vc animated:true];
+            }
+        }
+        return nil;
+    }];
 }
 
 @end
