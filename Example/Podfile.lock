@@ -1,0 +1,27 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - PYBaseView (0.1.0)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - PYBaseView (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  PYBaseView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  PYBaseView: 469e0f2dbe0fbd4dab074217c94f515d7cd87959
+
+PODFILE CHECKSUM: 5ec4ce3e58147feb536fceb8c9341e0aadaa01da
+
+COCOAPODS: 1.7.5
