@@ -343,10 +343,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PYBaseView_Example/Pods-PYBaseView_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PYBaseColorHandler/PYBaseColorHandler.framework",
+				"${BUILT_PRODUCTS_DIR}/PYBaseStringHandler/PYBaseStringHandler.framework",
 				"${BUILT_PRODUCTS_DIR}/PYBaseView/PYBaseView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseColorHandler.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseStringHandler.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

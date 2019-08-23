@@ -4,7 +4,11 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - PYBaseView (0.1.0)
+  - PYBaseColorHandler (0.1.1)
+  - PYBaseStringHandler (0.1.1)
+  - PYBaseView (0.1.1):
+    - PYBaseColorHandler
+    - PYBaseStringHandler
 
 DEPENDENCIES:
   - FBSnapshotTestCase
@@ -13,6 +17,8 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - FBSnapshotTestCase
+    - PYBaseColorHandler
+    - PYBaseStringHandler
 
 EXTERNAL SOURCES:
   PYBaseView:
@@ -20,7 +26,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  PYBaseView: 469e0f2dbe0fbd4dab074217c94f515d7cd87959
+  PYBaseColorHandler: 27c5875ddfd66672ca47a8d23930fde523720fda
+  PYBaseStringHandler: 090d18d116158f49aabff465826c577b1f44f45f
+  PYBaseView: b18c9b42d3286cd8291822e749dff6d488797966
 
 PODFILE CHECKSUM: 5ec4ce3e58147feb536fceb8c9341e0aadaa01da
 
