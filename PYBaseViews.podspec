@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'PYBaseViews'
-    s.version          = '0.1.0'
+    s.version          = '0.1.1'
     s.summary          = '对tableview的封装，高效、解耦。Button的封装: 状态的管理，链式调用'
     
     
