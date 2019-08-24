@@ -753,7 +753,7 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
 }
 
 - (NSString *) indexCellConvertString:(NSInteger)row andSection: (NSInteger)section {
-    NSString *str = [NSString stringWithFormat:@"%ld:---:%ld",row,section];
+    NSString *str = [NSString stringWithFormat:@"CELL:-%ld:---:%ld",row,section];
     return str;
 }
 
