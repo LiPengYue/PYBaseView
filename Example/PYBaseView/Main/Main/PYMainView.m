@@ -18,6 +18,7 @@ PYBaseTableViewDataSource
 >
 @property (nonatomic,strong) PYTableMainView *tableView;
 @property (nonatomic,strong) NSArray <NSString *>*dataArray;
+@property (nonatomic,strong) NSArray <NSString *>*titleArray;
 @end
 
 
@@ -38,7 +39,7 @@ PYBaseTableViewDataSource
 - (NSArray<NSString *> *)dataArray {
     if (!_dataArray) {
         _dataArray = @[
-                       //                       @"PresentViewController",
+                                              @"PresentViewController",
                        @"PYBaseTableViewController",
                        //                       @"BaseTextViewController",
                        //                       @"DeleteCollectionCellViewController",
@@ -50,6 +51,17 @@ PYBaseTableViewDataSource
     }
     return _dataArray;
 }
+
+- (NSArray<NSString *> *)titleArray {
+    if (!_titleArray) {
+        _titleArray = @[
+                        @"进度条demo",
+                        @"tableView封装demo",
+                        ];
+    }
+    return _titleArray;
+}
+
 #pragma mark - func
 // MARK: reload data
 
@@ -85,7 +97,7 @@ PYBaseTableViewDataSource
 - (SBaseTabelViewData) getTableViewData:(PYMainView *)baseTableView andCurrentSection:(NSInteger)section andCurrentRow:(NSInteger)row {
     
     SBaseTabelViewData data = SBaseTabelViewDataMakeDefault();
-    data.rowCount = self.dataArray.count;
+    data.rowCount = self.titleArray.count;
     data.sectionCount = 1;
     data.rowHeight = 60;
     data.rowType = PYMainTableViewCell.class;
@@ -98,7 +110,7 @@ PYBaseTableViewDataSource
     
     if ([PYMainTableViewCell.class isEqual: data.rowType]) {
         PYMainTableViewCell *mainCell = (PYMainTableViewCell *)cell;
-        mainCell.title = self.dataArray[indexPath.row];
+        mainCell.title = self.titleArray[indexPath.row];
     }
 }
 

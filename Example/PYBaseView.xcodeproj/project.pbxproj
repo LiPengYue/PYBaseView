@@ -24,6 +24,7 @@
 		68D0A06E97FFDF5408CA7439 /* Pods_PYBaseView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85A7CDFB42CFD98128CCF821 /* Pods_PYBaseView_Tests.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		E33B52A523110FA400625D2A /* PresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33B52A423110FA400625D2A /* PresentViewController.m */; };
 		E3FB7C92230FDE8200088461 /* BaseTableTestCell3.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FB7C83230FDE8200088461 /* BaseTableTestCell3.m */; };
 		E3FB7C93230FDE8200088461 /* BaseTableTestCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FB7C84230FDE8200088461 /* BaseTableTestCell3.xib */; };
 		E3FB7C94230FDE8200088461 /* BaseTableTestCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FB7C85230FDE8200088461 /* BaseTableTestCell2.m */; };
@@ -76,6 +77,8 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C09E038A401C6B69F81203C9 /* PYBaseView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PYBaseView.podspec; path = ../PYBaseView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C83D9747A35863A0420FA00F /* Pods-PYBaseView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PYBaseView_Tests.release.xcconfig"; path = "Target Support Files/Pods-PYBaseView_Tests/Pods-PYBaseView_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		E33B52A323110FA400625D2A /* PresentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentViewController.h; sourceTree = "<group>"; };
+		E33B52A423110FA400625D2A /* PresentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentViewController.m; sourceTree = "<group>"; };
 		E3FB7C7F230FDE8200088461 /* PYMainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYMainTableViewCell.h; sourceTree = "<group>"; };
 		E3FB7C81230FDE8200088461 /* BaseTableTestCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableTestCell2.h; sourceTree = "<group>"; };
 		E3FB7C82230FDE8200088461 /* BaseTableTestCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableTestCell1.h; sourceTree = "<group>"; };
@@ -227,6 +230,15 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		E33B52A223110FA400625D2A /* BasePointProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				E33B52A323110FA400625D2A /* PresentViewController.h */,
+				E33B52A423110FA400625D2A /* PresentViewController.m */,
+			);
+			path = BasePointProgressView;
+			sourceTree = "<group>";
+		};
 		E3E0E5B8230FE00100B3BDA8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +253,7 @@
 		E3E0E5B9230FE03500B3BDA8 /* Demos */ = {
 			isa = PBXGroup;
 			children = (
+				E33B52A223110FA400625D2A /* BasePointProgressView */,
 				E3E0E5BA230FE04000B3BDA8 /* TableViewDemo */,
 			);
 			path = Demos;
@@ -504,6 +517,7 @@
 				E3FB7C96230FDE8200088461 /* PYBaseTableTestView.m in Sources */,
 				6003F59E195388D20070C39A /* PYAppDelegate.m in Sources */,
 				E3FB7C92230FDE8200088461 /* BaseTableTestCell3.m in Sources */,
+				E33B52A523110FA400625D2A /* PresentViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* PYViewController.m in Sources */,
 				E3FB7C95230FDE8200088461 /* BaseTableTestCell1.m in Sources */,
 				E3FB7C94230FDE8200088461 /* BaseTableTestCell2.m in Sources */,
