@@ -172,9 +172,8 @@
 		6003F593195388D20070C39A /* Example for PYBaseView */ = {
 			isa = PBXGroup;
 			children = (
-				E3FB7C9B230FDEF600088461 /* PYBaseTableViewController.h */,
-				E3FB7C9C230FDEF600088461 /* PYBaseTableViewController.m */,
-				E3FB7C7E230FDE8200088461 /* UIViews */,
+				E3E0E5B9230FE03500B3BDA8 /* Demos */,
+				E3FB7C7E230FDE8200088461 /* Main */,
 				6003F59C195388D20070C39A /* PYAppDelegate.h */,
 				6003F59D195388D20070C39A /* PYAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -228,19 +227,52 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		E3FB7C7E230FDE8200088461 /* UIViews */ = {
+		E3E0E5B8230FE00100B3BDA8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				E3FB7C7F230FDE8200088461 /* PYMainTableViewCell.h */,
-				E3FB7C80230FDE8200088461 /* Cells */,
 				E3FB7C88230FDE8200088461 /* PYMainView.h */,
 				E3FB7C8A230FDE8200088461 /* PYMainView.m */,
-				E3FB7C89230FDE8200088461 /* PYBaseTableTestView.m */,
+				E3FB7C7F230FDE8200088461 /* PYMainTableViewCell.h */,
 				E3FB7C8B230FDE8200088461 /* PYMainTableViewCell.m */,
-				E3FB7C8C230FDE8200088461 /* Headers */,
-				E3FB7C91230FDE8200088461 /* PYBaseTableTestView.h */,
 			);
-			path = UIViews;
+			path = Main;
+			sourceTree = "<group>";
+		};
+		E3E0E5B9230FE03500B3BDA8 /* Demos */ = {
+			isa = PBXGroup;
+			children = (
+				E3E0E5BA230FE04000B3BDA8 /* TableViewDemo */,
+			);
+			path = Demos;
+			sourceTree = "<group>";
+		};
+		E3E0E5BA230FE04000B3BDA8 /* TableViewDemo */ = {
+			isa = PBXGroup;
+			children = (
+				E3FB7C9B230FDEF600088461 /* PYBaseTableViewController.h */,
+				E3FB7C9C230FDEF600088461 /* PYBaseTableViewController.m */,
+				E3E0E5BB230FE05200B3BDA8 /* Views */,
+			);
+			path = TableViewDemo;
+			sourceTree = "<group>";
+		};
+		E3E0E5BB230FE05200B3BDA8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E3FB7C91230FDE8200088461 /* PYBaseTableTestView.h */,
+				E3FB7C89230FDE8200088461 /* PYBaseTableTestView.m */,
+				E3FB7C80230FDE8200088461 /* Cells */,
+				E3FB7C8C230FDE8200088461 /* Headers */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E3FB7C7E230FDE8200088461 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E3E0E5B8230FE00100B3BDA8 /* Main */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		E3FB7C80230FDE8200088461 /* Cells */ = {

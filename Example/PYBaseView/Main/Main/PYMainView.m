@@ -82,7 +82,7 @@ PYBaseTableViewDataSource
 
 
 #pragma mark - delegate dataSource
-- (SBaseTabelViewData) getTableViewData:(PYBaseTableView *)baseTableView andCurrentSection:(NSInteger)section andCurrentRow:(NSInteger)row {
+- (SBaseTabelViewData) getTableViewData:(PYMainView *)baseTableView andCurrentSection:(NSInteger)section andCurrentRow:(NSInteger)row {
     
     SBaseTabelViewData data = SBaseTabelViewDataMakeDefault();
     data.rowCount = self.dataArray.count;
@@ -94,7 +94,7 @@ PYBaseTableViewDataSource
     return data;
 }
 
-- (void)baseTableView:(PYBaseTableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath andData:(SBaseTabelViewData)data{
+- (void)baseTableView:(PYMainView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath andData:(SBaseTabelViewData)data{
     
     if ([PYMainTableViewCell.class isEqual: data.rowType]) {
         PYMainTableViewCell *mainCell = (PYMainTableViewCell *)cell;
@@ -103,7 +103,7 @@ PYBaseTableViewDataSource
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath andData:(SBaseTabelViewData)data {
+- (void)tableView:(PYTableMainView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath andData:(SBaseTabelViewData)data {
     
     if ([PYMainTableViewCell.class isEqual:data.rowType]) {
         NSString *classStr = data.key;

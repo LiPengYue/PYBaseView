@@ -1,22 +1,15 @@
-//
-//  BaseTableViewDataSource.h
-//  Test
-//
-//  Created by 衣二三 on 2019/4/15.
-//  Copyright © 2019 衣二三. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class PYBaseTableView;
+@class PYTableMainView;
 struct SBaseTabelViewData {
     /// 扩展key
     NSString * key;
     NSInteger sectionCount;
     NSInteger rowCount;
-
+    
     Class rowType;
     Class headerType;
     Class footerType;
@@ -33,7 +26,9 @@ struct SBaseTabelViewData {
     CGFloat footerWidth;
     
     BOOL isXibCell;
-    /// 如果 (isXibCell && length<= 0) 那么cellNibName = NSStringFromClass(rowType)
+    BOOL isXibFooter;
+    BOOL isXibHeader;
+/// 如果 (isXibCell && length<= 0) 那么cellNibName = NSStringFromClass(rowType)
     NSString *cellNibName;
 };
 typedef struct SBaseTabelViewData  SBaseTabelViewData;
@@ -42,40 +37,40 @@ typedef struct SBaseTabelViewData  SBaseTabelViewData;
 @protocol PYBaseTableViewDataSource <NSObject>
 @required
 /// 获取tableView 的布局数据 (将会频繁调用)
-- (SBaseTabelViewData) getTableViewData: (PYBaseTableView *)baseTableView
+- (SBaseTabelViewData) getTableViewData: (PYTableMainView *)baseTableView
                       andCurrentSection: (NSInteger) section
                           andCurrentRow: (NSInteger) row;
 
 /// cell 将要出现的时候调用
-- (void) baseTableView:(PYBaseTableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
+- (void) baseTableView:(PYTableMainView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
 
 @optional
 // fixed font style. use custom view (UILabel) if you want something different
-- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section  andData: (SBaseTabelViewData)data;
+- (nullable NSString *)tableView:(PYTableMainView *)tableView titleForHeaderInSection:(NSInteger)section  andData: (SBaseTabelViewData)data;
 
-- (nullable NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section  andData: (SBaseTabelViewData)data;
+- (nullable NSString *)tableView:(PYTableMainView *)tableView titleForFooterInSection:(NSInteger)section  andData: (SBaseTabelViewData)data;
 
 // Editing
 
 // Individual rows can opt out of having the -editing property set for them. If not implemented, all rows are assumed to be editable.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
+- (BOOL)tableView:(PYTableMainView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
 
 // Moving/reordering
 
 // Allows the reorder accessory view to optionally be shown for a particular row. By default, the reorder control will be shown only if the datasource implements -tableView:moveRowAtIndexPath:toIndexPath:
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
+- (BOOL)tableView:(PYTableMainView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
 
 // Index
 /// 右边的索引 return list of section titles to display in section index view (e.g. "ABCD...Z#")
-- (nullable NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView  andData: (SBaseTabelViewData)data;
+- (nullable NSArray<NSString *> *)sectionIndexTitlesForTableView:(PYTableMainView *)tableView  andData: (SBaseTabelViewData)data;
 
 /// 点击 或滑动右边的索引 需要偏移到哪一组
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index  andData: (SBaseTabelViewData)data;
+- (NSInteger)tableView:(PYTableMainView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index  andData: (SBaseTabelViewData)data;
 
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
+- (void)tableView:(PYTableMainView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath andFromData:(SBaseTabelViewData)fromData andToData: (SBaseTabelViewData)toData;
+- (void)tableView:(PYTableMainView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath andFromData:(SBaseTabelViewData)fromData andToData: (SBaseTabelViewData)toData;
 @end
 
 
@@ -89,8 +84,8 @@ NS_INLINE SBaseTabelViewData SBaseTabelViewDataMakeDefault() {
     data.footerWidth = CGFLOAT_MIN;
     
     data.rowType = UITableViewCell.class;
-    data.headerType = UIView.class;
-    data.footerType = UIView.class;
+    data.headerType = UITableViewHeaderFooterView.class;
+    data.footerType = UITableViewHeaderFooterView.class;
     
     data.rowCount = 0;
     data.sectionCount = 1;
@@ -99,6 +94,8 @@ NS_INLINE SBaseTabelViewData SBaseTabelViewDataMakeDefault() {
     data.headerIdentifier = @"";
     data.footerIdentifier = @"";
     data.isXibCell = false;
+    data.isXibHeader = false;
+    data.isXibFooter = false;
     data.cellNibName = @"";
     return data;
 }
@@ -139,11 +136,14 @@ NS_INLINE BOOL SBaseTableViewDataEqualto(SBaseTabelViewData data1,SBaseTabelView
     data1.sectionCount == data2.sectionCount &&
     
     data1.isXibCell == data2.isXibCell &&
+    data1.isXibFooter == data2.isXibFooter&&
+    data1.isXibHeader == data2.isXibHeader&&
     
     [data1.key  isEqualToString: data2.key] &&
     [data1.rowIdentifier isEqualToString:data2.rowIdentifier] &&
     [data1.headerIdentifier isEqualToString:data2.headerIdentifier] &&
-    [data1.footerIdentifier isEqualToString:data2.footerIdentifier] &&
+    [data1.footerIdentifier isEqualToString:data2.footerIdentifier]
+    &&
     [data1.cellNibName isEqualToString:data2.cellNibName];
 }
 

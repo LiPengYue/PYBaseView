@@ -20,11 +20,8 @@ UITableViewDataSource,
 UITableViewDelegate
 >
 
-
 @property (nonatomic,weak) id <PYBaseTableViewDelegate> tableViewDelegate;
 @property (nonatomic,weak) id <PYBaseTableViewDataSource> tableViewDataSource;
-
-
 
 @property (nonatomic,assign) UITableViewStyle tableViewStyle;
 @property (nonatomic,strong,readonly) PYTableView *tableView;
@@ -42,9 +39,9 @@ UITableViewDelegate
  这个值会在[tableView reloadData]时候更新
  @return 缓存的位置信息
  */
-- (NSDictionary <NSIndexPath *, NSValue *>*) getCurrentIndexPathAnchorPointsCache;
-
-
+- (NSDictionary <NSString *, NSValue *>*) getCurrentIndexPathAnchorPointsCache;
+/// 用这个方法 转化缓存的dic的key
+- (NSString *) indexConvertString: (NSIndexPath *)indexPath;
 /**
  获取一个indexPath 对应的frame
  
@@ -75,7 +72,7 @@ UITableViewDelegate
  @param indexPath index
  @return frame.origin.y
  */
-- (CGFloat) getYIndexPathWithIndexPath: (NSIndexPath *)indexPath;
+- (CGFloat) getYWithIndex: (NSIndexPath *) indexPath;
 
 /// 如果是baseTableViewCell
 @property (nonatomic,assign) BOOL isHiddenSeparatorLine;
