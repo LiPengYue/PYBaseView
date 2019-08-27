@@ -27,8 +27,8 @@
 
 - (void) setupView {
     CGRect rect = self.view.bounds;
-    rect.origin.y = PYBaseSize.navTotalH;
-    rect.size.height = PYBaseSize.screen_navH;
+    rect.origin.y = PYSize.navTotalH;
+    rect.size.height = PYSize.screen_navH;
     self.mainView = [[PYMainView alloc] initWithFrame:rect];
     [self.view addSubview:self.mainView];
 }

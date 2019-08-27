@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BaseFont : NSObject
+@interface PYFont : NSObject
 
 + (UIFont *(^)(CGFloat size)) fontSCR;
 + (UIFont *(^)(CGFloat size)) fontSCL;

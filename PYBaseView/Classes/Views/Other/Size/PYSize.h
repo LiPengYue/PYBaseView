@@ -3,7 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PYBaseSize : NSObject
+@interface PYSize : NSObject
 /// 导航条总高度  iphoneX 以下为64，以上为88
 @property(class, nonatomic, readonly) CGFloat navTotalH;
 /// 导航条高度

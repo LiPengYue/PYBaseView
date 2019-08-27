@@ -1,8 +1,8 @@
 
 
-#import "PYBaseSize.h"
+#import "PYSize.h"
 
-@implementation PYBaseSize
+@implementation PYSize
 static CGFloat navTotalH = 0;
 static CGFloat navBarH = 0;
 static CGFloat statusBarH = 0;
@@ -23,13 +23,13 @@ static CGFloat screen_nav_tabBarH = 0;
 }
 + (CGFloat) navTotalH {
     if (navTotalH <= 0) {
-        navTotalH = PYBaseSize.navBarH + PYBaseSize.statusBarH;
+        navTotalH = PYSize.navBarH + PYSize.statusBarH;
     }
     return navTotalH;
 }
 + (CGFloat)homeBarH {
     if (homeBarH <= 0) {
-        homeBarH = PYBaseSize.statusBarH>20?34:0;
+        homeBarH = PYSize.statusBarH>20?34:0;
     }
     return homeBarH;
 }
@@ -54,13 +54,13 @@ static CGFloat screen_nav_tabBarH = 0;
 }
 + (CGFloat)screen_navH {
     if (screen_navH <= 0) {
-        screen_navH = PYBaseSize.screenH - PYBaseSize.navTotalH;
+        screen_navH = PYSize.screenH - PYSize.navTotalH;
     }
     return screen_navH;
 }
 + (CGFloat)screen_nav_tabBarH {
     if (screen_nav_tabBarH <= 0) {
-        screen_nav_tabBarH = PYBaseSize.screen_navH - PYBaseSize.tabbarH;
+        screen_nav_tabBarH = PYSize.screen_navH - PYSize.tabbarH;
     }
     return screen_nav_tabBarH;
 }

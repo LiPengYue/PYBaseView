@@ -27,7 +27,7 @@
     [self.navBarView reloadView];
     
     [self.view addSubview:self.tableView];
-    self.tableView.frame = CGRectMake(0, PYBaseSize.navTotalH, PYBaseSize.screenW, PYBaseSize.screen_navH);
+    self.tableView.frame = CGRectMake(0, PYSize.navTotalH, PYSize.screenW, PYSize.screen_navH);
     [self.tableView reloadData];
 }
 

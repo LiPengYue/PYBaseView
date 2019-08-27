@@ -6,11 +6,11 @@
 //  Copyright © 2018年 13lipengyue. All rights reserved.
 //
 
-#import "BaseFont.h"
-#import "BaseThemeManager.h"
+#import "PYFont.h"
+//#import "BaseThemeManager.h"
 
 #define IOS9_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0)
-@implementation BaseFont
+@implementation PYFont
 
 //PingFangSC
 + (UIFont *(^)(CGFloat size)) fontSCL {
@@ -42,7 +42,7 @@
 //PingFangSC
 + (UIFont *)pingFangSCLightFont:(CGFloat)size {
     
-    CGFloat h = size * [BaseThemeManager fontThemeGetHeight];
+    CGFloat h = size;// * [BaseThemeManager fontThemeGetHeight];
     return
     (IOS9_OR_LATER)
     ? [UIFont fontWithName:@"PingFangSC-Light" size:h]
@@ -51,7 +51,7 @@
 
 + (UIFont *)pingFangSCMediumFont:(CGFloat)size {
 
-    CGFloat h = size * [BaseThemeManager fontThemeGetHeight];
+    CGFloat h = size;// * [BaseThemeManager fontThemeGetHeight];
     return
     (IOS9_OR_LATER)
     ? [UIFont fontWithName:@"PingFangSC-Medium" size:size]
@@ -60,13 +60,13 @@
 
 + (UIFont *)pingFangSCRFont:(CGFloat)size {
     
-    CGFloat h = size * [BaseThemeManager fontThemeGetHeight];
+    CGFloat h = size;// * [BaseThemeManager fontThemeGetHeight];
     return [UIFont systemFontOfSize:h];
 }
 
 + (UIFont *)pingFangSCBoldFont:(CGFloat)size {
    
-    CGFloat h = size * [BaseThemeManager fontThemeGetHeight];
+    CGFloat h = size;// * [BaseThemeManager fontThemeGetHeight];
     UIFont *font = [UIFont fontWithName:@"PingFangSC-Bold" size:h];
     return font ? font : [UIFont boldSystemFontOfSize:h];
 }

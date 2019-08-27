@@ -115,7 +115,7 @@
         }];
         
         _typeButton.layer.cornerRadius = 6;
-        _typeButton.frame = CGRectMake(100, PYBaseSize.navTotalH + 20, 200, 100);
+        _typeButton.frame = CGRectMake(100, PYSize.navTotalH + 20, 200, 100);
         [_typeButton addTarget:self action:@selector(click_typeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _typeButton;

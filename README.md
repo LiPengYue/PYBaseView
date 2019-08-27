@@ -12,7 +12,7 @@ pod 'PYBaseView'
 2. [PYTableMainView:对tableView的封装](https://juejin.im/post/5d60a3b85188252373305a09)（[其他TableView工具的推荐**ZHTableViewGroup**](https://github.com/josercc/ZHTableViewGroup)）
 3. [PYBaseView:切圆角视图](https://juejin.im/post/5d6370e46fb9a06b112acb22)
 4. [BasePointProgressView:进度条](https://juejin.im/post/5d60ffc9f265da03c8152b8f)
-5. PYBaseSize:对一些常用宽高的管理
+5. PYSize:对一些常用宽高的管理
 
 ## BaseGradientView渐变视图
 
@@ -118,12 +118,12 @@ pod 'PYBaseView'
 
 ![屏幕快照 2019-08-24 下午2.41.20](https://user-gold-cdn.xitu.io/2019/8/24/16cc2e727a4317e2?w=630&h=302&f=jpeg&s=10882)
 
-## PYBaseSize对一些常用宽高的管理
+## PYSize对一些常用宽高的管理
 
 提供了一些常用的高度、宽度。
 
 ```objective-c
-@interface PYBaseSize : NSObject
+@interface PYSize : NSObject
 /// 导航条总高度  iphoneX 以下为64，以上为88
 @property(class, nonatomic, readonly) CGFloat navTotalH;
 /// 导航条高度
@@ -154,9 +154,9 @@ pod 'PYBaseView'
 ```
 
 ```objective-c
-#import "PYBaseSize.h"
+#import "PYSize.h"
 
-@implementation PYBaseSize
+@implementation PYSize
 static CGFloat navTotalH = 0;
 static CGFloat navBarH = 0;
 static CGFloat statusBarH = 0;
@@ -177,13 +177,13 @@ static CGFloat screen_nav_tabBarH = 0;
 }
 + (CGFloat) navTotalH {
     if (navTotalH <= 0) {
-        navTotalH = PYBaseSize.navBarH + PYBaseSize.statusBarH;
+        navTotalH = PYSize.navBarH + PYSize.statusBarH;
     }
     return navTotalH;
 }
 + (CGFloat)homeBarH {
     if (homeBarH <= 0) {
-        homeBarH = PYBaseSize.statusBarH>20?34:0;
+        homeBarH = PYSize.statusBarH>20?34:0;
     }
     return homeBarH;
 }
@@ -208,13 +208,13 @@ static CGFloat screen_nav_tabBarH = 0;
 }
 + (CGFloat)screen_navH {
     if (screen_navH <= 0) {
-        screen_navH = PYBaseSize.screenH - PYBaseSize.navTotalH;
+        screen_navH = PYSize.screenH - PYSize.navTotalH;
     }
     return screen_navH;
 }
 + (CGFloat)screen_nav_tabBarH {
     if (screen_nav_tabBarH <= 0) {
-        screen_nav_tabBarH = PYBaseSize.screen_navH - PYBaseSize.tabbarH;
+        screen_nav_tabBarH = PYSize.screen_navH - PYSize.tabbarH;
     }
     return screen_nav_tabBarH;
 }
