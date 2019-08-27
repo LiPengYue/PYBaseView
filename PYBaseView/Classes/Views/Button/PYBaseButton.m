@@ -8,8 +8,7 @@
 
 #import "PYBaseButton.h"
 @interface PYBaseButton()
-/// handler
-@property (nonatomic,strong) PYBaseButtonHandler *handler;
+
 
 @end
 

@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PYBaseButton : UIButton
 @property (nonatomic,assign) BOOL isShowHighlighted;
 - (void) setupHandler: (void(^)(PYBaseButtonHandler *handler))block;
+
+/// handler
+@property (nonatomic,strong) PYBaseButtonHandler *handler;
 @end
 
 NS_ASSUME_NONNULL_END
