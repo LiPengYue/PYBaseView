@@ -18,6 +18,7 @@
 #import "PYBaseLabel.h"
 #import "PYTableMainView.h"
 #import "ScrollViewPanDirectionHandler.h"
+#import "Font.h"
 #import "PYBaseSize.h"
 
 
