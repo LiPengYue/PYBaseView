@@ -354,4 +354,10 @@
     }
     return _imageDictionaryM;
 }
+- (NSMutableDictionary<NSNumber *,UIColor *> *)titleColorDictionaryM {
+    if (!_titleColorDictionaryM) {
+        _titleColorDictionaryM = [NSMutableDictionary new];
+    }
+    return _titleColorDictionaryM;
+}
 @end

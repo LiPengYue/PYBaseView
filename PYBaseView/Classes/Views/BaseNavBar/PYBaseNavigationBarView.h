@@ -65,8 +65,18 @@ typedef void(^CliekNavItem)(UIButton *button,NSInteger index);
 - (void) clickTitleButtonFunc: (ClickNavTitle) clickTitle;
 
 #pragma layout
-/** 整体布局的edg */
-@property (nonatomic,assign) UIEdgeInsets itemsEdge;
+
+/** 最左边item左边的间距  默认为14*/
+@property (nonatomic,assign) CGFloat leftItemLeftSpacing;
+
+/** 最右边item右边的间距  默认为14*/
+@property (nonatomic,assign) CGFloat rightItemRightSpacing;
+
+/** title 底部的间距 默认为5 */
+@property (nonatomic,assign) CGFloat titleBottomSpacing;
+
+/** item 底部的间距，默认为-1（如果小于0 则 与title conter.y对齐）*/
+@property (nonatomic,assign) CGFloat itemBottomSpacing;
 
 /** item 之间最小的间距 默认为14pt */
 @property (nonatomic,assign) CGFloat itemsMinMargin;

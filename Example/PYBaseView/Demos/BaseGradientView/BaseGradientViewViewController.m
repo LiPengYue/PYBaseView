@@ -46,6 +46,8 @@
     [self click_typeButtonAction:self.typeButton];
     
     self.navBarView.addTitleItemWithTitleAndImg(@"渐变",nil);
+    self.navBarView.addLeftItemWithTitleAndImg(@"返回",nil);
+    [self.navBarView reloadView];
     [self.gradientView drawRadialGradient:^(PYBaseGradientViewDrawRadialConfig *radialConfig) {
         radialConfig
         .setUpScaleEndCenter(CGPointMake(0.5, 0.5))

@@ -49,7 +49,11 @@
     _titleButton.titleLabel.font = [UIFont systemFontOfSize:12];
     [_titleButton addTarget:self action:@selector(click_titleButtonButton:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.itemsEdge = UIEdgeInsetsMake(0, 14, 10, 14);
+    self.leftItemLeftSpacing = 14;
+    self.rightItemRightSpacing = 14;
+    self.titleBottomSpacing = 5;
+    self.itemBottomSpacing = -1;
+    
     self.itemsMinMargin = 14;
     self.itemHeight = 24;
     self.itemMinWidth = 44;
@@ -339,7 +343,6 @@
 - (void) layoutTitleButton {
     [self.backgroundView addSubview:self.titleButton];
     self.titleButton.translatesAutoresizingMaskIntoConstraints = false;
-    
     NSLayoutConstraint *width =
     [self createWConstraint:self.titleButton
                      toItem:nil
@@ -358,7 +361,7 @@
     NSLayoutConstraint *bottom =
     [self createBottom:self.titleButton
                 toItem:self.backgroundView
-           andConstant:-(self.itemsEdge.bottom)];
+           andConstant:-(self.titleBottomSpacing)];
     
     
     if (self.titleButtonWidth
@@ -406,7 +409,7 @@
         NSLayoutConstraint *left =
         [self createLeft:button
                   toItem:self.backgroundView
-             andConstant:self.itemsEdge.left];
+             andConstant:self.leftItemLeftSpacing];
         
         NSLayoutConstraint *centerY =
         [self createCeterY:button
@@ -434,12 +437,21 @@
                 NSLayoutConstraint *left =
                 [self createLeft:obj
                           toItem:self.backgroundView
-                     andConstant:self.itemsEdge.left];
+                     andConstant:self.leftItemLeftSpacing];
                 
-                NSLayoutConstraint *centerY =
-                [self createCeterY:obj
-                            toItem:self.titleButton
-                       andConstant: 0];
+                NSLayoutConstraint *centerY;
+                NSLayoutConstraint *bottomSpacing;
+                if (self.itemBottomSpacing < 0) {
+                    centerY =
+                    [self createCeterY:obj
+                                toItem:self.titleButton
+                           andConstant: 0];
+                }else{
+                    bottomSpacing =
+                    [self createBottom:obj
+                                toItem:self.backgroundView
+                           andConstant:self.itemBottomSpacing];
+                }
                 
                 NSLayoutConstraint *height =
                 [self createHeight:obj
@@ -447,6 +459,11 @@
                        andConstant:self.itemHeight];
                 
                 [obj addConstraint:height];
+                if (centerY) {
+                    [self.backgroundView addConstraints:@[centerY,left]];
+                }else{
+                    [self.backgroundView addConstraints:@[bottomSpacing,left]];
+                }
                 [self.backgroundView addConstraints:@[centerY,left]];
                 
             } else {
@@ -517,17 +534,31 @@
                 NSLayoutConstraint *right =
                 [self createRight:obj
                            toItem:self.backgroundView
-                      andConstant:(-self.itemsEdge.right)];
-                NSLayoutConstraint *centerY =
-                [self createCeterY:obj
+                      andConstant:(-self.rightItemRightSpacing)];
+                NSLayoutConstraint *centerY;
+                NSLayoutConstraint *bottom;
+                if (self.itemBottomSpacing < 0) {
+                    centerY =
+                    [self createCeterY:obj
                             toItem: self.titleButton
-                       andConstant:0];
+                           andConstant:0];
+                }else{
+                    bottom =
+                    [self createBottom:obj
+                                toItem:self.backgroundView
+                           andConstant:self.itemBottomSpacing];
+                }
+                
                 NSLayoutConstraint *height =
                 [self createHeight:obj
                             toItem:nil
                        andConstant:self.itemHeight];
                 
-                [self.backgroundView addConstraints:@[centerY,right]];
+                if (centerY) {
+                    [self.backgroundView addConstraints:@[centerY,right]];
+                }else{
+                    [self.backgroundView addConstraints:@[bottom,right]];
+                }
                 [obj addConstraints:@[height]];
                 
                 
@@ -930,6 +961,10 @@
         self.shadowLayer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
         self.shadowLayer.frame = self.bounds;
     }
+   
+    [self.titleButton layoutIfNeeded];
+    self.titleButton.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+    
 }
 
 @end
