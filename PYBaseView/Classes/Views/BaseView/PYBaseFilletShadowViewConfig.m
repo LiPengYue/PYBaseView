@@ -37,7 +37,7 @@
         return self;
     };
 }
-- (PYBaseFilletShadowViewConfig *(^)(CGFloat rightBottomRadius)) setUpRightBottonAddRadius {
+- (PYBaseFilletShadowViewConfig *(^)(CGFloat rightBottomRadius)) setUpRightBottomAddRadius {
     return ^(CGFloat radius) {
         self.rightBottomAddRadius = radius;
         return self;

@@ -21,7 +21,7 @@
 - (PYBaseButtonHandler *(^)(UIFont *)) setUpFont {
     __weak typeof (self)weakSelf = self;
     return ^(UIFont *font) {
-        if (!self.py_isTagState || weakSelf.state == weakSelf.state) {
+        if (!self.py_isSetupingState) {
             weakSelf.button.titleLabel.font = font;
         }
         weakSelf.fontDictionaryM[@(weakSelf.state)] = font;
@@ -32,7 +32,7 @@
 - (PYBaseButtonHandler *(^)(CGFloat)) setUpCornerRadius {
     __weak typeof (self) weakSelf = self;
     return ^(CGFloat radius) {
-        if (!self.py_isTagState || weakSelf.state == weakSelf.state) {
+        if (!self.py_isSetupingState) {
             weakSelf.button.layer.cornerRadius = radius;
         }
         weakSelf.cornerRadiusDictionaryM[@(weakSelf.state)] = @(radius);
@@ -42,16 +42,16 @@
 
 - (void)setUpStyle:(NSInteger) state style:(void(^)(PYBaseButtonHandler *handler))callBack {
     self.state = state;
-    self.py_isTagState = true;
+    self.py_isSetupingState = true;
     callBack(self);
     self.state = 0;
-    self.py_isTagState = false;
+    self.py_isSetupingState = false;
 }
 
 - (PYBaseButtonHandler *(^)(UIColor *)) setUpTitleColor {
     __weak typeof (self)weakSelf = self;
     return ^(UIColor *color) {
-        [weakSelf.button setTitleColor:color forState:weakSelf.state];
+    weakSelf.titleColorDictionaryM[@(weakSelf.state)] = color;
         return weakSelf;
     };
 }
@@ -68,7 +68,7 @@
 - (PYBaseButtonHandler *(^)(NSString *)) setUpTitle {
     __weak typeof (self)weakSelf = self;
     return ^(NSString *title) {
-        [weakSelf.button setTitle:title forState:weakSelf.state];
+    weakSelf.titleDictionaryM[@(weakSelf.state)] = title;
         return weakSelf;
     };
 }
@@ -76,7 +76,7 @@
 - (PYBaseButtonHandler *(^)(NSAttributedString *)) setUpAttributedString {
     __weak typeof (self)weakSelf = self;
     return ^(NSAttributedString *attributedString) {
-        [weakSelf.button setAttributedTitle:attributedString forState:weakSelf.state];
+        weakSelf.titleAttriStrDictionaryM[@(weakSelf.state)] = attributedString;
         return weakSelf;
     };
 }
@@ -84,7 +84,7 @@
 - (PYBaseButtonHandler *(^)(UIImage *))setUpImage {
     __weak typeof (self)weakSelf = self;
     return ^(UIImage *image) {
-        [weakSelf.button setImage:image forState:weakSelf.state];
+    weakSelf.imageDictionaryM[@(weakSelf.state)] = image;
         return weakSelf;
     };
 }
@@ -98,7 +98,7 @@
 - (PYBaseButtonHandler *(^)(UIImage *))setUpBackgroundImage {
     __weak typeof (self)weakSelf = self;
     return ^(UIImage *image) {
-        [weakSelf.button setBackgroundImage:image forState:weakSelf.state];
+    weakSelf.bgImageDictionaryM[@(weakSelf.state)] = image;
         return weakSelf;
     };
 }
@@ -115,7 +115,7 @@
     __weak typeof (self)weakSelf = self;
     return ^(CGFloat borderW) {
 
-        if (!self.py_isTagState || weakSelf.state == weakSelf.state) {
+        if (!self.py_isSetupingState) {
             weakSelf.button.layer.borderWidth = borderW;
         }
         weakSelf.borderWidthDictionaryM[@(weakSelf.state)] = @(borderW);
@@ -126,7 +126,7 @@
 - (PYBaseButtonHandler *(^)(UIColor *)) setUpBorderColor {
     __weak typeof (self)weakSelf = self;
     return ^(UIColor *color) {
-        if (!self.py_isTagState || weakSelf.state == weakSelf.state) {
+        if (!self.py_isSetupingState) {
             weakSelf.button.layer.borderColor = color.CGColor;
         }
         weakSelf.borderColorDictionaryM[@(weakSelf.state)] = color;
@@ -153,6 +153,79 @@
     [self adjustBorderWidthWithState:state];
     [self adjustFontWithState:state];
     [self adjustCornerRadiusWithState:state];
+    
+    [self adjustAttributedTitleWithState:state];
+    [self adjustTitleWithState:state];
+    [self adjustImageWithState:state];
+    [self adjustTitleColorMWithState:state];
+    [self adjustBackgroundImageWithState:state];
+}
+
+- (void) adjustAttributedTitleWithState:(NSInteger) state {
+    NSNumber *currenState = @(state);
+    NSNumber *normalState = @(0);
+    NSAttributedString *attriTitle = self.titleAttriStrDictionaryM[currenState];
+    
+    if (attriTitle.length <= 0) {
+        attriTitle = self.titleAttriStrDictionaryM[normalState];
+    }
+    if (attriTitle.length > 0) {
+        [self.button setAttributedTitle:attriTitle forState:UIControlStateNormal];
+    }
+}
+
+//titleDictionaryM
+- (void) adjustTitleWithState: (NSInteger) state {
+    NSNumber *currenState = @(state);
+    NSNumber *normalState = @(0);
+    NSString *title = self.titleDictionaryM[currenState];
+    
+    if (title.length <= 0) {
+        title = self.titleDictionaryM[normalState];
+    }
+    if (title.length > 0) {
+        [self.button setTitle:title forState:UIControlStateNormal];
+    }
+}
+
+- (void) adjustImageWithState: (NSInteger) state {
+    NSNumber *currenState = @(state);
+    NSNumber *normalState = @(0);
+    UIImage *image = self.imageDictionaryM[currenState];
+    
+    if (!image) {
+        image = self.imageDictionaryM[normalState];
+    }
+    if (image) {
+        [self.button setImage:image forState:UIControlStateNormal];
+    }
+}
+
+- (void) adjustTitleColorMWithState: (NSInteger) state {
+    NSNumber *currenState = @(state);
+    NSNumber *normalState = @(0);
+    UIColor *color = self.titleColorDictionaryM[currenState];
+    
+    if (!color) {
+        color = self.titleColorDictionaryM[normalState];
+    }
+    if (color) {
+        [self.button setTitleColor:color forState:UIControlStateNormal];
+    }
+}
+
+- (void) adjustBackgroundImageWithState: (NSInteger) state {
+    NSNumber *currenState = @(state);
+    NSNumber *normalState = @(0);
+    UIImage *image = self.bgImageDictionaryM[currenState];
+    
+    /// backgroundColor
+    if (!image) {
+        image = self.bgImageDictionaryM[normalState];
+    }
+    if (image) {
+        [self.button setBackgroundImage:image forState:UIControlStateNormal];
+    }
 }
 
 - (void) adjustBackgroundColorWithState:(NSInteger)state {
@@ -260,4 +333,25 @@
     return _cornerRadiusDictionaryM;
 }
 
+    
+- (NSMutableDictionary<NSNumber *,NSString *> *)titleDictionaryM {
+    if (!_titleDictionaryM) {
+        _titleDictionaryM = [NSMutableDictionary new];
+    }
+    return _titleDictionaryM;
+}
+    
+- (NSMutableDictionary<NSNumber *,NSAttributedString *> *)titleAttriStrDictionaryM {
+    if (!_titleAttriStrDictionaryM) {
+        _titleAttriStrDictionaryM = [NSMutableDictionary new];
+    }
+    return _titleAttriStrDictionaryM;
+}
+    
+- (NSMutableDictionary<NSNumber *,UIImage *> *)imageDictionaryM {
+    if (!_imageDictionaryM) {
+        _imageDictionaryM = [NSMutableDictionary new];
+    }
+    return _imageDictionaryM;
+}
 @end

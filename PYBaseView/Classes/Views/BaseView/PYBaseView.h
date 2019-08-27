@@ -63,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) recut;
 /// 阴影动画
 - (void) beginShadowAnimation:(void(^)(PYViewShadowConfigration *config)) block;
+@property (nonatomic,strong) PYViewShadowConfigration *shadowConfig;
 @end
 
 NS_ASSUME_NONNULL_END

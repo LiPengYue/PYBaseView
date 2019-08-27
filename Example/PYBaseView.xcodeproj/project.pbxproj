@@ -25,6 +25,8 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		E33B52A523110FA400625D2A /* PresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33B52A423110FA400625D2A /* PresentViewController.m */; };
+		E3A01E902313AB7100979A3F /* PYRoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A01E8F2313AB7100979A3F /* PYRoundViewController.m */; };
+		E3C44C572313866100E85D4B /* BaseGradientViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C44C562313866100E85D4B /* BaseGradientViewViewController.m */; };
 		E3FB7C92230FDE8200088461 /* BaseTableTestCell3.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FB7C83230FDE8200088461 /* BaseTableTestCell3.m */; };
 		E3FB7C93230FDE8200088461 /* BaseTableTestCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FB7C84230FDE8200088461 /* BaseTableTestCell3.xib */; };
 		E3FB7C94230FDE8200088461 /* BaseTableTestCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FB7C85230FDE8200088461 /* BaseTableTestCell2.m */; };
@@ -79,6 +81,10 @@
 		C83D9747A35863A0420FA00F /* Pods-PYBaseView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PYBaseView_Tests.release.xcconfig"; path = "Target Support Files/Pods-PYBaseView_Tests/Pods-PYBaseView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E33B52A323110FA400625D2A /* PresentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentViewController.h; sourceTree = "<group>"; };
 		E33B52A423110FA400625D2A /* PresentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentViewController.m; sourceTree = "<group>"; };
+		E3A01E8E2313AB7100979A3F /* PYRoundViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYRoundViewController.h; sourceTree = "<group>"; };
+		E3A01E8F2313AB7100979A3F /* PYRoundViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PYRoundViewController.m; sourceTree = "<group>"; };
+		E3C44C552313866100E85D4B /* BaseGradientViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseGradientViewViewController.h; sourceTree = "<group>"; };
+		E3C44C562313866100E85D4B /* BaseGradientViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseGradientViewViewController.m; sourceTree = "<group>"; };
 		E3FB7C7F230FDE8200088461 /* PYMainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYMainTableViewCell.h; sourceTree = "<group>"; };
 		E3FB7C81230FDE8200088461 /* BaseTableTestCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableTestCell2.h; sourceTree = "<group>"; };
 		E3FB7C82230FDE8200088461 /* BaseTableTestCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableTestCell1.h; sourceTree = "<group>"; };
@@ -239,6 +245,24 @@
 			path = BasePointProgressView;
 			sourceTree = "<group>";
 		};
+		E3A01E8D2313AB6400979A3F /* RoundView */ = {
+			isa = PBXGroup;
+			children = (
+				E3A01E8E2313AB7100979A3F /* PYRoundViewController.h */,
+				E3A01E8F2313AB7100979A3F /* PYRoundViewController.m */,
+			);
+			path = RoundView;
+			sourceTree = "<group>";
+		};
+		E3C44C542313864500E85D4B /* BaseGradientView */ = {
+			isa = PBXGroup;
+			children = (
+				E3C44C552313866100E85D4B /* BaseGradientViewViewController.h */,
+				E3C44C562313866100E85D4B /* BaseGradientViewViewController.m */,
+			);
+			path = BaseGradientView;
+			sourceTree = "<group>";
+		};
 		E3E0E5B8230FE00100B3BDA8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +277,8 @@
 		E3E0E5B9230FE03500B3BDA8 /* Demos */ = {
 			isa = PBXGroup;
 			children = (
+				E3A01E8D2313AB6400979A3F /* RoundView */,
+				E3C44C542313864500E85D4B /* BaseGradientView */,
 				E33B52A223110FA400625D2A /* BasePointProgressView */,
 				E3E0E5BA230FE04000B3BDA8 /* TableViewDemo */,
 			);
@@ -516,8 +542,10 @@
 				E3FB7C9A230FDE8200088461 /* BasetableTestHeserFooterView1.m in Sources */,
 				E3FB7C96230FDE8200088461 /* PYBaseTableTestView.m in Sources */,
 				6003F59E195388D20070C39A /* PYAppDelegate.m in Sources */,
+				E3A01E902313AB7100979A3F /* PYRoundViewController.m in Sources */,
 				E3FB7C92230FDE8200088461 /* BaseTableTestCell3.m in Sources */,
 				E33B52A523110FA400625D2A /* PresentViewController.m in Sources */,
+				E3C44C572313866100E85D4B /* BaseGradientViewViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* PYViewController.m in Sources */,
 				E3FB7C95230FDE8200088461 /* BaseTableTestCell1.m in Sources */,
 				E3FB7C94230FDE8200088461 /* BaseTableTestCell2.m in Sources */,

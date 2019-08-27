@@ -39,7 +39,9 @@ PYBaseTableViewDataSource
 - (NSArray<NSString *> *)dataArray {
     if (!_dataArray) {
         _dataArray = @[
-                                              @"PresentViewController",
+                               @"PYRoundViewController",
+                               @"BaseGradientViewViewController",
+                                @"PresentViewController",
                        @"PYBaseTableViewController",
                        //                       @"BaseTextViewController",
                        //                       @"DeleteCollectionCellViewController",
@@ -55,6 +57,8 @@ PYBaseTableViewDataSource
 - (NSArray<NSString *> *)titleArray {
     if (!_titleArray) {
         _titleArray = @[
+                        @"切圆角与阴影动画demo",
+                        @"关于渐变demo",
                         @"进度条demo",
                         @"tableView封装demo",
                         ];

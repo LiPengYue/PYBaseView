@@ -1,10 +1,3 @@
-//
-//  BaseSize.h
-//  Test
-//
-//  Created by 衣二三 on 2019/4/15.
-//  Copyright © 2019 衣二三. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
@@ -30,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 祛除导航栏与tabbar的高度
 @property(class, nonatomic, readonly) CGFloat screen_nav_tabBarH;
 
+
+/// 需要调用，就可以拿到正确的值
 + (void) setNavTotalH: (CGFloat) h;
 + (void) setNavBarH: (CGFloat) h;
 + (void) setStatusBarH: (CGFloat) h;

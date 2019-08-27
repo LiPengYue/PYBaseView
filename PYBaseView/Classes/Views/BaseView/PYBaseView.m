@@ -20,7 +20,7 @@
 @property (nonatomic,strong) NSLayoutConstraint *containerViewTop;
 @property (nonatomic,strong) NSLayoutConstraint *containerViewBottom;
 
-@property (nonatomic,strong) PYViewShadowConfigration *shadowConfig;
+//@property (nonatomic,strong) PYViewShadowConfigration *shadowConfig;
 @end
 
 @implementation PYBaseView

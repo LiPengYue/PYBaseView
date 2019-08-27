@@ -6,6 +6,7 @@
 //  Copyright © 2018年 13lipengyue. All rights reserved.
 //
 
+
 #import "ScrollViewPanDirectionHandler.h"
 
 @interface ScrollViewPanDirectionHandler()<UIGestureRecognizerDelegate>

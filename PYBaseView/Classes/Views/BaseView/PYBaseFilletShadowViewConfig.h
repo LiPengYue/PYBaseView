@@ -29,7 +29,7 @@ typedef void(^PYBaseFilletShadowViewConfigPropertyChangedBlock)(BOOL isShapeChan
 - (PYBaseFilletShadowViewConfig *(^)(CGFloat rightTopAddRadius)) setUpRightTopAddRadius;
 
 @property (nonatomic,assign) CGFloat rightBottomAddRadius;
-- (PYBaseFilletShadowViewConfig *(^)(CGFloat rightBottomAddRadius)) setUpRightBottonAddRadius;
+- (PYBaseFilletShadowViewConfig *(^)(CGFloat rightBottomAddRadius)) setUpRightBottomAddRadius;
 
 
 // MARK: - shadow

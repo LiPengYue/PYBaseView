@@ -29,6 +29,8 @@
  * @warning 注意: 如果某个样式没有找到相应state下的值，就会设置成normal状态下的样式 如果normal状态下仍未找到，则保持当前状态
  */
 - (void) adjustButtonStyleWithState: (NSInteger) state;
+    
+- (PYBaseButtonHandler *(^)(CGFloat)) setUpCornerRadius;
 
 #pragma mark - font
 /**
@@ -140,5 +142,13 @@
 @property (nonatomic,strong) NSMutableDictionary <NSNumber *,NSNumber *>*borderWidthDictionaryM;
 @property (nonatomic,strong) NSMutableDictionary <NSNumber *,UIFont *>*fontDictionaryM;
 @property (nonatomic,strong) NSMutableDictionary <NSNumber *, NSNumber *> *cornerRadiusDictionaryM;
-@property (nonatomic,assign) BOOL py_isTagState;
+    
+
+@property (nonatomic,strong) NSMutableDictionary <NSNumber *,UIColor *>*titleColorDictionaryM;
+@property (nonatomic,strong) NSMutableDictionary <NSNumber *,UIImage *>*imageDictionaryM;
+@property (nonatomic,strong)  NSMutableDictionary<NSNumber *,NSString *> *titleDictionaryM;
+@property (nonatomic,strong)  NSMutableDictionary<NSNumber *,NSAttributedString *> *titleAttriStrDictionaryM;
+@property (nonatomic,strong)  NSMutableDictionary<NSNumber *,UIImage *> *bgImageDictionaryM;
+    
+@property (nonatomic,assign) BOOL py_isSetupingState;
 @end
