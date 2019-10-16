@@ -492,6 +492,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-PYBaseView_Example/Pods-PYBaseView_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PYBaseColorHandler/PYBaseColorHandler.framework",
 				"${BUILT_PRODUCTS_DIR}/PYBaseEventHandler/PYBaseEventHandler.framework",
+				"${BUILT_PRODUCTS_DIR}/PYBaseNavigationController/PYBaseNavigationController.framework",
 				"${BUILT_PRODUCTS_DIR}/PYBaseStringHandler/PYBaseStringHandler.framework",
 				"${BUILT_PRODUCTS_DIR}/PYBaseView/PYBaseView.framework",
 			);
@@ -499,6 +500,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseColorHandler.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseEventHandler.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseNavigationController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseStringHandler.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYBaseView.framework",
 			);

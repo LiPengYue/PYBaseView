@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PYBaseView'
-  s.version          = '0.1.8'
+  s.version          = '0.1.9'
   s.summary          = '对tableview的封装，高效、解耦。Button的封装: 状态的管理，链式调用'
 
   s.description      = <<-DESC
@@ -22,4 +22,5 @@ Pod::Spec.new do |s|
   
   s.dependency 'PYBaseStringHandler'
   s.dependency 'PYBaseColorHandler'
+  s.dependency 'PYBaseNavigationController'
 end

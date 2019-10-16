@@ -6,9 +6,11 @@ PODS:
     - FBSnapshotTestCase/Core
   - PYBaseColorHandler (0.1.1)
   - PYBaseEventHandler (0.2.0)
+  - PYBaseNavigationController (0.1.1)
   - PYBaseStringHandler (0.1.1)
-  - PYBaseView (0.1.6):
+  - PYBaseView (0.1.8):
     - PYBaseColorHandler
+    - PYBaseNavigationController
     - PYBaseStringHandler
 
 DEPENDENCIES:
@@ -21,6 +23,7 @@ SPEC REPOS:
     - FBSnapshotTestCase
     - PYBaseColorHandler
     - PYBaseEventHandler
+    - PYBaseNavigationController
     - PYBaseStringHandler
 
 EXTERNAL SOURCES:
@@ -31,8 +34,9 @@ SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   PYBaseColorHandler: 27c5875ddfd66672ca47a8d23930fde523720fda
   PYBaseEventHandler: 47b896a33bc5128ffd639746c561401a3797a902
+  PYBaseNavigationController: ed0a7f2f0300aeb21be6cbf489dd737d79ac35a4
   PYBaseStringHandler: 090d18d116158f49aabff465826c577b1f44f45f
-  PYBaseView: 8f39ed8dff020565b2479b0ac4c038653bf6be9e
+  PYBaseView: 58f25f8a2c9b846e3fcf38015623d53b5622cfc7
 
 PODFILE CHECKSUM: 1870a243ca096dcb96e95b409f87159bbbced6db
 
