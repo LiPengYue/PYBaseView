@@ -73,7 +73,7 @@
 		6F498B4671C8E6079EDFFE17 /* Pods-PYBaseViews_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PYBaseViews_Tests.release.xcconfig"; path = "Target Support Files/Pods-PYBaseViews_Tests/Pods-PYBaseViews_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		9A62BF658D7CEE58CA7CCA16 /* PYBaseViews.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PYBaseViews.podspec; path = ../PYBaseViews.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9A62BF658D7CEE58CA7CCA16 /* PYBaseViews.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PYBaseViews.podspec; path = ../PYBaseViews.podspec; sourceTree = "<group>"; };
 		C0C94DA4DAF4DE0523047E2D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E07BC4E00FF32AB769DC1812 /* Pods_PYBaseViews_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PYBaseViews_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FB7C57230F942D00088461 /* PYMainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYMainView.h; sourceTree = "<group>"; };
