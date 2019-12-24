@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A7E22B3FF21BB1B19947967 /* Pods_PYBaseViews_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1487218D863E2B9DD03C3F22 /* Pods_PYBaseViews_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -80,6 +79,7 @@
 		9A62BF658D7CEE58CA7CCA16 /* PYBaseViews.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PYBaseViews.podspec; path = ../PYBaseViews.podspec; sourceTree = "<group>"; };
 		C0C94DA4DAF4DE0523047E2D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E07BC4E00FF32AB769DC1812 /* Pods_PYBaseViews_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PYBaseViews_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E30B00AA23B1EF39000D3524 /* PYBaseViews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PYBaseViews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CA8EA423B1E82500A074D2 /* BaseSegmentTagTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSegmentTagTableHeaderView.m; sourceTree = "<group>"; };
 		E3CA8EA523B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSegmentTagCollectionViewCell.m; sourceTree = "<group>"; };
 		E3CA8EA623B1E82500A074D2 /* BaseSegmentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSegmentTableView.h; sourceTree = "<group>"; };
@@ -118,7 +118,6 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				3A7E22B3FF21BB1B19947967 /* Pods_PYBaseViews_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +159,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E30B00AA23B1EF39000D3524 /* PYBaseViews.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
@@ -656,6 +656,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PYBaseViews/PYBaseViews-Prefix.pch";
 				INFOPLIST_FILE = "PYBaseViews/PYBaseViews-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -673,6 +674,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PYBaseViews/PYBaseViews-Prefix.pch";
 				INFOPLIST_FILE = "PYBaseViews/PYBaseViews-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

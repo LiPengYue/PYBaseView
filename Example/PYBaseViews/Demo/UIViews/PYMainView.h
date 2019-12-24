@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PYBaseTableTestView.h"
 #import "PYViewController.h"
 NS_ASSUME_NONNULL_BEGIN
 static NSString *const kClickMainView = @"kClickMainView";

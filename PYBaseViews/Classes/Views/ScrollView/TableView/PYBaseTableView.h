@@ -24,8 +24,6 @@ UITableViewDelegate
 @property (nonatomic,weak) id <PYBaseTableViewDelegate> tableViewDelegate;
 @property (nonatomic,weak) id <PYBaseTableViewDataSource> tableViewDataSource;
 
-
-
 @property (nonatomic,assign) UITableViewStyle tableViewStyle;
 @property (nonatomic,strong,readonly) PYTableView *tableView;
 
@@ -44,14 +42,6 @@ UITableViewDelegate
  */
 - (NSDictionary <NSIndexPath *, NSValue *>*) getCurrentIndexPathAnchorPointsCache;
 
-
-/**
- 获取一个indexPath 对应的frame
- 
- @param indexPath indexPath
- @return frame
- */
-- (CGRect) getAnchorPointWithIndexPath: (NSIndexPath *)indexPath;
 
 /**
  某个header的frame
