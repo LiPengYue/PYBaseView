@@ -24,6 +24,10 @@
 		6A16BC855D70716A17468915 /* Pods_PYBaseViews_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07BC4E00FF32AB769DC1812 /* Pods_PYBaseViews_Tests.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		E3CA8EAC23B1E82500A074D2 /* BaseSegmentTagTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CA8EA423B1E82500A074D2 /* BaseSegmentTagTableHeaderView.m */; };
+		E3CA8EAD23B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CA8EA523B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.m */; };
+		E3CA8EAE23B1E82500A074D2 /* BaseSegmentTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CA8EA723B1E82500A074D2 /* BaseSegmentTableFooterView.m */; };
+		E3CA8EAF23B1E82500A074D2 /* BaseSegmentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CA8EA823B1E82500A074D2 /* BaseSegmentTableView.m */; };
 		E3FB7C59230F942D00088461 /* PYMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FB7C58230F942D00088461 /* PYMainView.m */; };
 		E3FB7C5C230F950700088461 /* PYMainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FB7C5B230F950700088461 /* PYMainTableViewCell.m */; };
 		E3FB7C5F230F960000088461 /* PYBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FB7C5E230F960000088461 /* PYBaseTableViewController.m */; };
@@ -76,6 +80,14 @@
 		9A62BF658D7CEE58CA7CCA16 /* PYBaseViews.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PYBaseViews.podspec; path = ../PYBaseViews.podspec; sourceTree = "<group>"; };
 		C0C94DA4DAF4DE0523047E2D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E07BC4E00FF32AB769DC1812 /* Pods_PYBaseViews_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PYBaseViews_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3CA8EA423B1E82500A074D2 /* BaseSegmentTagTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSegmentTagTableHeaderView.m; sourceTree = "<group>"; };
+		E3CA8EA523B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSegmentTagCollectionViewCell.m; sourceTree = "<group>"; };
+		E3CA8EA623B1E82500A074D2 /* BaseSegmentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSegmentTableView.h; sourceTree = "<group>"; };
+		E3CA8EA723B1E82500A074D2 /* BaseSegmentTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSegmentTableFooterView.m; sourceTree = "<group>"; };
+		E3CA8EA823B1E82500A074D2 /* BaseSegmentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSegmentTableView.m; sourceTree = "<group>"; };
+		E3CA8EA923B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSegmentTagCollectionViewCell.h; sourceTree = "<group>"; };
+		E3CA8EAA23B1E82500A074D2 /* BaseSegmentTagTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSegmentTagTableHeaderView.h; sourceTree = "<group>"; };
+		E3CA8EAB23B1E82500A074D2 /* BaseSegmentTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSegmentTableFooterView.h; sourceTree = "<group>"; };
 		E3FB7C57230F942D00088461 /* PYMainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYMainView.h; sourceTree = "<group>"; };
 		E3FB7C58230F942D00088461 /* PYMainView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PYMainView.m; sourceTree = "<group>"; };
 		E3FB7C5A230F950700088461 /* PYMainTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PYMainTableViewCell.h; sourceTree = "<group>"; };
@@ -209,6 +221,21 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		E3CA8EA323B1E82500A074D2 /* SegmentView */ = {
+			isa = PBXGroup;
+			children = (
+				E3CA8EA623B1E82500A074D2 /* BaseSegmentTableView.h */,
+				E3CA8EA823B1E82500A074D2 /* BaseSegmentTableView.m */,
+				E3CA8EA723B1E82500A074D2 /* BaseSegmentTableFooterView.m */,
+				E3CA8EAB23B1E82500A074D2 /* BaseSegmentTableFooterView.h */,
+				E3CA8EAA23B1E82500A074D2 /* BaseSegmentTagTableHeaderView.h */,
+				E3CA8EA423B1E82500A074D2 /* BaseSegmentTagTableHeaderView.m */,
+				E3CA8EA923B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.h */,
+				E3CA8EA523B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.m */,
+			);
+			path = SegmentView;
+			sourceTree = "<group>";
+		};
 		E3FB7C51230F932800088461 /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +263,7 @@
 		E3FB7C56230F942000088461 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
+				E3CA8EA323B1E82500A074D2 /* SegmentView */,
 				E3FB7C57230F942D00088461 /* PYMainView.h */,
 				E3FB7C58230F942D00088461 /* PYMainView.m */,
 				E3FB7C5A230F950700088461 /* PYMainTableViewCell.h */,
@@ -481,8 +509,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3CA8EAE23B1E82500A074D2 /* BaseSegmentTableFooterView.m in Sources */,
+				E3CA8EAD23B1E82500A074D2 /* BaseSegmentTagCollectionViewCell.m in Sources */,
+				E3CA8EAF23B1E82500A074D2 /* BaseSegmentTableView.m in Sources */,
 				E3FB7C62230F964500088461 /* PYBaseTableTestView.m in Sources */,
 				E3FB7C5C230F950700088461 /* PYMainTableViewCell.m in Sources */,
+				E3CA8EAC23B1E82500A074D2 /* BaseSegmentTagTableHeaderView.m in Sources */,
 				E3FB7C5F230F960000088461 /* PYBaseTableViewController.m in Sources */,
 				E3FB7C59230F942D00088461 /* PYMainView.m in Sources */,
 				6003F59E195388D20070C39A /* PYAppDelegate.m in Sources */,

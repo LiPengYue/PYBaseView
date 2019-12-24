@@ -7,7 +7,7 @@ PODS:
   - PYBaseColorHandler (0.1.1)
   - PYBaseEventHandler (0.2.0)
   - PYBaseStringHandler (0.1.1)
-  - PYBaseViews (0.1.0):
+  - PYBaseViews (0.1.1):
     - PYBaseColorHandler
     - PYBaseStringHandler
 
@@ -32,7 +32,7 @@ SPEC CHECKSUMS:
   PYBaseColorHandler: 27c5875ddfd66672ca47a8d23930fde523720fda
   PYBaseEventHandler: 47b896a33bc5128ffd639746c561401a3797a902
   PYBaseStringHandler: 090d18d116158f49aabff465826c577b1f44f45f
-  PYBaseViews: 07c9f3efa2f1c4ed905a63000baa683b6c828e8d
+  PYBaseViews: 82e6ed2b93538e51e36c1b3ee3363f24f97a7ef5
 
 PODFILE CHECKSUM: 59f67841553baffec660bfd7be3ec5b787907396
 

@@ -1,5 +1,5 @@
 //
-//  PYTableMainView.h
+//  PYBaseTableView.h
 //  FBSnapshotTestCase
 //
 //  Created by 衣二三 on 2019/8/23.
@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PYTableMainView : UIView
+@interface PYBaseTableView : UIView
 <
 UITableViewDataSource,
 UITableViewDelegate

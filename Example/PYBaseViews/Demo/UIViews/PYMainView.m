@@ -16,7 +16,7 @@
 PYBaseTableViewDelegate,
 PYBaseTableViewDataSource
 >
-@property (nonatomic,strong) PYTableMainView *tableView;
+@property (nonatomic,strong) PYBaseTableView *tableView;
 @property (nonatomic,strong) NSArray <NSString *>*dataArray;
 @end
 
@@ -67,9 +67,9 @@ PYBaseTableViewDataSource
 }
 
 // MARK: lazy loads
-- (PYTableMainView *)tableView {
+- (PYBaseTableView *)tableView {
     if (!_tableView) {
-        _tableView = [[PYTableMainView alloc]initWithFrame:self.bounds];
+        _tableView = [[PYBaseTableView alloc]initWithFrame:self.bounds];
         _tableView.tableViewDelegate = self;
         _tableView.tableViewDataSource = self;
     }

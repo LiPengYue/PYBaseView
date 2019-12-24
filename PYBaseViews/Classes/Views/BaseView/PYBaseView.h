@@ -16,7 +16,7 @@
 #import "PYBaseViewHandler.h"
 #import "PYBaseButton.h"
 #import "PYBaseLabel.h"
-#import "PYTableMainView.h"
+#import "PYBaseTableView.h"
 #import "ScrollViewPanDirectionHandler.h"
 #import "PYBaseSize.h"
 

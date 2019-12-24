@@ -14,7 +14,10 @@ typedef struct SBaseTabelViewData SBaseTabelViewData;
 
 @protocol PYBaseTableViewDelegate <NSObject,UIScrollViewDelegate>
 @optional
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath andData: (SBaseTabelViewData)data;
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
+          andData: (SBaseTabelViewData)data;
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section andData: (SBaseTabelViewData)data NS_AVAILABLE_IOS(6_0);
 

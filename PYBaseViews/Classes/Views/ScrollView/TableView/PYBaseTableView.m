@@ -1,11 +1,11 @@
 //
-//  PYTableMainView.m
+//  PYBaseTableView.m
 //  FBSnapshotTestCase
 //
 //  Created by 衣二三 on 2019/8/23.
 //
 
-#import "PYTableMainView.h"
+#import "PYBaseTableView.h"
 
 #import "PYBaseTableViewCell.h"
 
@@ -15,7 +15,7 @@
 #    define DLOG(...)
 #endif
 
-@interface PYTableMainView()
+@interface PYBaseTableView()
 /// 已经注册的cell
 @property (nonatomic,strong) NSMutableDictionary *registerCellDic;
 @property (nonatomic,strong) NSMutableDictionary *registerHeaderDic;
@@ -34,7 +34,7 @@ static NSString *const KBASETABLEVIEWDEFAULTCELLID = @"KBASETABLEVIEWDEFAULTCELL
 static NSString *const KBASETABLEVIEWDEFAULTHEADERID = @"KBASETABLEVIEWDEFAULTHEADERID";
 /// footerID
 static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFOOTERID";
-@implementation PYTableMainView
+@implementation PYBaseTableView
 
 // MARK: - init
 
@@ -562,7 +562,7 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     return self.currentIndexPathFrameCache;
 }
 
-- (NSMutableDictionary<NSIndexPath *,NSNumber *> *)currentIndexPathFrameCache {
+- (NSMutableDictionary<NSIndexPath *,NSValue *> *)currentIndexPathFrameCache {
     if (!_currentIndexPathFrameCache) {
         _currentIndexPathFrameCache = [NSMutableDictionary new];
     }

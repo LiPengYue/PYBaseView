@@ -7,10 +7,10 @@
 //
 
 #import <PYBaseView.h>
-
+#import "PYMainView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PYBaseTableTestView : PYTableMainView
+@interface PYBaseTableTestView : PYBaseTableView
 
 @end
 
