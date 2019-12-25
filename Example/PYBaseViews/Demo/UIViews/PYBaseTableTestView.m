@@ -59,7 +59,7 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
         // 第3组是横滑内容组
         NSInteger contentViewSection = 3;
         self.topSpacing = [self getHeaderFrameWithSection:contentViewSection].origin.y;
-        self.itemsHeight = CGRectGetMaxY([self getHeaderFrameWithSection:contentViewSection]) - CGRectGetMinY([self getFooterFrameWithSection:contentViewSection]);
+//        self.itemsHeight = CGRectGetMaxY([self getHeaderFrameWithSection:contentViewSection]) - CGRectGetMinY([self getFooterFrameWithSection:contentViewSection]);
     }
     return self;
 }
