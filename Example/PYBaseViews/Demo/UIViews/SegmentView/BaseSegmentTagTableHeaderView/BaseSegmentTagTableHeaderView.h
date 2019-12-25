@@ -1,8 +1,8 @@
 //
 //  BaseSegmentTagTableHeaderView.h
-//  MFNestTableViewDemo
+//  PYBaseViews_Example
 //
-//  Created by 衣二三 on 2019/12/24.
+//  Created by 李鹏跃 on 2019/12/24.
 //  Copyright © 2019 Lyman Li. All rights reserved.
 //
 
@@ -40,7 +40,7 @@ typedef struct SBaseSegmentTagTableHeaderViewData SBaseSegmentTagTableHeaderView
 /// 自定义的cell 默认是 BaseSegmentTagCollectionViewCell.class 不支持 XIB
 @property (nonatomic,strong) Class <BaseSegmentTagCollectionViewCellDelegate> collectionViewCellClass;
 
-@property (nonatomic,assign) SBaseSegmentTagCollectionViewCellData cellStyleData;
+@property (nonatomic,strong) BaseSegmentTagCollectionViewCellStyleModel *cellStyleData;
 
 //MARK: 自定义 collectionView 的 delegate || dataSource || layoutDelegate
 @property (nonatomic,weak) id <UICollectionViewDelegate,UICollectionViewDelegateFlowLayout> collectionViewDelegate;
@@ -54,10 +54,10 @@ struct SBaseSegmentTagTableHeaderViewData {
 };
 
 @protocol BaseSegmentTagTableHeaderViewDelegate <NSObject>
-- (SBaseSegmentTagTableHeaderViewData) getDataWithRow: (NSInteger)row
+- (SBaseSegmentTagTableHeaderViewData) baseSegmentGetDataWithRow: (NSInteger)row
 andSection: (NSInteger)section;
 
-- (void) customSelectedIndexAnimationWithCollectionView:(UICollectionView *)collectionView
+- (void) baseSegmentCustomSelectedIndexAnimationWithCollectionView:(UICollectionView *)collectionView
                                  andBottomGuidepostView: (UIView *)bottomGuidepostView
                                     andCurrentIndexPath:(NSIndexPath *)indexPath;
 @end

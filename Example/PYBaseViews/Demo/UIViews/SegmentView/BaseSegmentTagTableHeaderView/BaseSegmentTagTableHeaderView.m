@@ -1,12 +1,19 @@
 //
 //  BaseSegmentTagTableHeaderView.m
-//  MFNestTableViewDemo
+//  PYBaseViews_Example
 //
-//  Created by 衣二三 on 2019/12/24.
+//  Created by 李鹏跃 on 2019/12/24.
 //  Copyright © 2019 Lyman Li. All rights reserved.
 //
 
 #import "BaseSegmentTagTableHeaderView.h"
+
+#ifdef DEBUG
+#    define DLog(...) NSLog(__VA_ARGS__)
+#else
+#    define DLog(...)
+#endif
+
 @interface BaseSegmentTagTableHeaderView()
 <
 UICollectionViewDelegate,
@@ -39,7 +46,7 @@ UICollectionViewDelegateFlowLayout
     CGFloat y = self.collectionViewEdgeInsets.top;
     CGFloat w = self.frame.size.width - self.collectionViewEdgeInsets.right - x;
     CGFloat h = self.frame.size.height - self.collectionViewEdgeInsets.bottom - y;
-    self.contentView.frame = CGRectMake(x, y, w, h);
+    self.collectionView.frame = CGRectMake(x, y, w, h);
 }
 
 // MARK: - 逻辑相关
@@ -60,12 +67,15 @@ UICollectionViewDelegateFlowLayout
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     
-    if ([self.delegate respondsToSelector:@selector(customSelectedIndexAnimationWithCollectionView:andBottomGuidepostView:andCurrentIndexPath:)]) {
-        [self.delegate customSelectedIndexAnimationWithCollectionView:self.collectionView
+    if ([self.delegate respondsToSelector:@selector(baseSegmentCustomSelectedIndexAnimationWithCollectionView:andBottomGuidepostView:andCurrentIndexPath:)]) {
+        [self.delegate baseSegmentCustomSelectedIndexAnimationWithCollectionView:self.collectionView
                                                andBottomGuidepostView:self.bottomGuidepostView
                                                   andCurrentIndexPath:indexPath];
     }else{
     
+        NSIndexPath *lastSelectedIndexPath = [NSIndexPath indexPathForRow:self.lastSelectedIndex inSection:0];
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPath,lastSelectedIndexPath]];
+//        [self.collectionView reloadData];
         [self.collectionView scrollToItemAtIndexPath:indexPath
                                     atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                             animated:isAnimated];
@@ -94,6 +104,8 @@ UICollectionViewDelegateFlowLayout
         if ([cell respondsToSelector:@selector(setupData:)]) {
             [cell setupData: self.modelArray[indexPath.row]];
         }
+        cell.styleData = self.cellStyleData;
+        cell.isSelected = indexPath.row == self.currentSelectedIndex;
     }
     return cell;
 }
@@ -109,30 +121,33 @@ UICollectionViewDelegateFlowLayout
         isChange = self.selectedIndexBlock(indexPath.row);
     }
     if (isChange) {
-        [self scrollToIndex:indexPath.row andAnimated:false];
+        [self scrollToIndex:indexPath.row andAnimated:true];
     }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.delegate respondsToSelector:@selector(getDataWithRow:andSection:)]) {
-        return [self.delegate getDataWithRow:indexPath.row andSection:indexPath.section].itemSize;
+    if ([self.delegate respondsToSelector:@selector(baseSegmentGetDataWithRow:andSection:)]) {
+        return [self.delegate baseSegmentGetDataWithRow:indexPath.row andSection:indexPath.section].itemSize;
     }else{
+        DLog(@"\n 🌶：itemSize 没有值\n");
         return CGSizeMake(CGFLOAT_MIN, CGFLOAT_MIN);
     }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if ([self.delegate respondsToSelector:@selector(getDataWithRow:andSection:)]) {
-        return [self.delegate getDataWithRow:0 andSection:section].insetForSection;
+    if ([self.delegate respondsToSelector:@selector(baseSegmentGetDataWithRow:andSection:)]) {
+        return [self.delegate baseSegmentGetDataWithRow:0 andSection:section].insetForSection;
     }else{
+        DLog(@"\n 🌶：insetForSection 没有值\n");
         return UIEdgeInsetsMake(CGFLOAT_MIN, CGFLOAT_MIN, CGFLOAT_MIN, CGFLOAT_MIN);
     }
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    if ([self.delegate respondsToSelector:@selector(getDataWithRow:andSection:)]) {
-        return [self.delegate getDataWithRow:0 andSection:section].minimumSpacingForSection;
+    if ([self.delegate respondsToSelector:@selector(baseSegmentGetDataWithRow:andSection:)]) {
+        return [self.delegate baseSegmentGetDataWithRow:0 andSection:section].minimumSpacingForSection;
     }else{
+        DLog(@"\n 🌶：minimumSpacingForSection 没有值\n");
         return CGFLOAT_MIN;
     }
 }
@@ -142,9 +157,11 @@ UICollectionViewDelegateFlowLayout
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         _collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-        self.collectionViewDataSource = self;
-        self.collectionViewDelegate = self;
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        _collectionView.backgroundColor = UIColor.whiteColor;
     }
     return _collectionView;
 }
@@ -168,7 +185,13 @@ UICollectionViewDelegateFlowLayout
         _bottomGuidepostView.bounds = CGRectMake(0, 0, 3, 3);
     }
     return _bottomGuidepostView;
-    return _bottomGuidepostView;
+}
+
+- (BaseSegmentTagCollectionViewCellStyleModel *)cellStyleData {
+    if (!_cellStyleData) {
+        _cellStyleData = [[BaseSegmentTagCollectionViewCellStyleModel alloc]init];
+    }
+    return _cellStyleData;
 }
 
 - (void) setCollectionViewCellClass:(Class)collectionViewCellClass {

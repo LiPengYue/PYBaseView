@@ -29,6 +29,9 @@
     [self.view addSubview:self.tableView];
     self.tableView.frame = CGRectMake(0, PYBaseSize.navTotalH, PYBaseSize.screenW, PYBaseSize.screen_navH);
     [self.tableView reloadData];
+    self.tableView.tableView.estimatedSectionFooterHeight = 0;
+    self.tableView.tableView.estimatedSectionHeaderHeight = 0;
+
 }
 
 

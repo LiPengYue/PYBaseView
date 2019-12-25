@@ -2,12 +2,12 @@
 //  PYBaseTableTestView.m
 //  PYBaseViews_Example
 //
-//  Created by 衣二三 on 2019/8/23.
+//  Created by 李鹏跃 on 2019/8/23.
 //  Copyright © 2019 LiPengYue. All rights reserved.
 //
 
 #import "PYBaseTableTestView.h"
-
+#import "PYSubTableVew.h"
 //#import "BaseObjectHeaders.h"
 //#import "BaseViewHeaders.h"
 #import <PYBaseView.h>
@@ -16,19 +16,24 @@
 #import "BaseTableTestCell3.h"
 #import "BasetableTestHeserFooterView1.h"
 #import "BasetableTestHeserFooterView2.h"
-
+#import "BaseSegmentTagTableHeaderView.h"
+#import "BaseSegmentTableFooterView.h"
+#import "PYScrollView.h"
 
 @interface PYBaseTableTestView()
 <
 PYBaseTableViewDelegate,
 PYBaseTableViewDataSource,
-PYBaseTableViewCellDelegate
+PYBaseTableViewCellDelegate,
+BaseSegmentTagTableHeaderViewDelegate
 >
 
 @property (nonatomic,strong) NSMutableArray <NSString *>*data1;
 @property (nonatomic,strong) NSMutableArray <NSString *>*data2;
 @property (nonatomic,strong) NSMutableArray <NSString *>*data3;
 @property (nonatomic,strong) NSMutableArray <NSString *>*data4;
+@property (nonatomic, strong) NSMutableArray <NSArray *> *dataSource;
+@property (nonatomic, strong) NSMutableArray <UIView *> *viewList;
 @end
 
 static NSString *const KBaseTableTestCell3_data3 = @"KBaseTableTestCell3_data3";
@@ -50,6 +55,11 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
         [self setupSubViewsFunc1];
         self.tableViewDelegate = self;
         self.tableViewDataSource = self;
+        [self initDataSource];
+        // 第3组是横滑内容组
+        NSInteger contentViewSection = 3;
+        self.topSpacing = [self getHeaderFrameWithSection:contentViewSection].origin.y;
+        self.itemsHeight = CGRectGetMaxY([self getHeaderFrameWithSection:contentViewSection]) - CGRectGetMinY([self getFooterFrameWithSection:contentViewSection]);
     }
     return self;
 }
@@ -59,7 +69,59 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
 
 
 // MARK: handle views
+- (void)initDataSource {
+    
+    NSArray *pageDataCount = @[@2, @10, @30];
+    
+    _dataSource = [[NSMutableArray alloc] init];
+    for (int i = 0; i < pageDataCount.count; ++i) {
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for (int j = 0; j < [pageDataCount[i] integerValue]; ++j) {
+            [array addObject:[NSString stringWithFormat:@"page - %d - row - %d", i, j]];
+        }
+        [_dataSource addObject:array];
+    }
+    
+    _viewList = [[NSMutableArray alloc] init];
+    
+    // 添加3个tableview
+    for (int i = 0; i < pageDataCount.count; ++i) {
+        PYSubTableVew *tableView = [[PYSubTableVew alloc] initWithFrame:CGRectZero];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.tag = i;
+        __weak typeof (self) weakself = self;
+        [weakself registerContentWithView:tableView andContentInnerScrollView:tableView];
+        [_viewList addObject:tableView];
+    }
+    
+    // 添加ScrollView
+    PYScrollView *scrollView = [[PYScrollView alloc] init];
+    scrollView.tag = 100011;
+    scrollView.backgroundColor = [UIColor whiteColor];
+    UIImage *image = [UIImage imageNamed:@"3"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    CGFloat w = PYBaseSize.screenW;
+    imageView.frame = CGRectMake(0, 0, w, w * image.size.height / image.size.width);
+    scrollView.contentSize = imageView.frame.size;
+    scrollView.alwaysBounceVertical = YES; // 设置为YES，当contentSize小于frame.size也可以滚动
+    [scrollView addSubview:imageView];
+    scrollView.bounces = true;
+    [self registerContentWithView:scrollView
+        andContentInnerScrollView:scrollView];
+    [_viewList addObject:scrollView];
+    
+    // 添加webview
+    UIWebView *webview = [[UIWebView alloc] init];
+    webview.backgroundColor = [UIColor whiteColor];
+    [webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lymanli.com/"]]];
+    [_viewList addObject:webview];
+    [self registerContentWithView:webview
+        andContentInnerScrollView:webview.scrollView];
+}
+
 - (void) setupSubViewsFunc1 {
+    
+    
     self.data1 = @[@"你的名字"].mutableCopy;
     self.data2 = @[@"我的钱包",@"常见问题",@"联系客服",@"查看权益"].mutableCopy;
     self.data3 = @[@"绿箩<EB>学名：Epipremnum aureum (Linden et André) G. S. Bunting 是天南星科喜林芋属蔓性攀援植物"].mutableCopy;
@@ -87,7 +149,7 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
 - (SBaseTabelViewData) getTableViewData:(PYBaseTableView *)baseTableView andCurrentSection:(NSInteger)section andCurrentRow:(NSInteger)row {
     
     SBaseTabelViewData data = SBaseTabelViewDataMakeDefault();
-    data.sectionCount = 6;
+    data.sectionCount = 4;
     
     if (section == 0) {
         data.rowCount = self.data1.count;
@@ -95,7 +157,7 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
         data.rowType = BaseTableTestCell1.class;
         data.rowIdentifier = KBaseTableTestCell1;
     }
-    
+     
     if (section == 1) {
         data.rowCount = self.data2.count;
         data.rowHeight = 30;
@@ -119,18 +181,26 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
     }
     
     if (section == 3) {
-        data.rowCount = self.data4.count;
+        data.rowCount = 2;
         data.rowHeight = 120;
         data.rowType = BaseTableTestCell3.class;
         data.rowIdentifier = KBaseTableTestCell3;
         
         data.headerHeight = 60;
-        data.headerIdentifier = KBasetableTestHeserFooterView2;
-        data.headerType = BasetableTestHeserFooterView2.class;
+        data.headerIdentifier = NSStringFromClass(BaseSegmentTagTableHeaderView.class);
+        data.headerType = BaseSegmentTagTableHeaderView.class;
+        
+        data.footerType = BaseSegmentTableFooterView.class;
+        data.footerIdentifier = NSStringFromClass(BaseSegmentTableFooterView.class);
+        data.footerHeight = PYBaseSize.screen_nav_tabBarH;
+        
         data.isXibCell = true;
-        data.key = KBaseTableTestCell3_data4;///根据key区分是第三组数据
+        ///根据key区分是第三组数据
+        data.key = KBaseTableTestCell3_data4;
     }
+    
     return data;
+    
 }
 
 - (void)baseTableView:(PYBaseTableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath andData:(SBaseTabelViewData)data{
@@ -191,13 +261,33 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
             header.rightPointView.backgroundColor = UIColor.blueColor;
         }
     }
+    
+    /// 第三种headerView
+    if ([BaseSegmentTagTableHeaderView.class isEqual:view.class]) {
+        BaseSegmentTagTableHeaderView *header = (BaseSegmentTagTableHeaderView *)view;
+        header.cellStyleData.normalBorderW = 0;
+        header.cellStyleData.selectedBorderW = 1;
+        header.cellStyleData.selectedBorderColor = UIColor.redColor;
+        header.modelArray = @[@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444"];
+        header.delegate = self;
+    }
 }
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath andData:(SBaseTabelViewData)data {
-//    if ([BaseTableTestCell1.class isEqual:data.rowType]) {
-//        NSLog(@"BaseTableTestCell1");
-//    }
-//}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section andData:(SBaseTabelViewData)data {
+    if (data.footerType == BaseSegmentTableFooterView.class) {
+        BaseSegmentTableFooterView *footer = (BaseSegmentTableFooterView *)view;
+        footer.flowLayout.minimumLineSpacing = 12;
+        footer.subViewArray = self.viewList;
+    }else{
+    }
+}
+
+- (SBaseSegmentTagTableHeaderViewData)baseSegmentGetDataWithRow:(NSInteger)row andSection:(NSInteger)section {
+    SBaseSegmentTagTableHeaderViewData data;
+    data.itemSize = CGSizeMake(50, 50);
+    return data;
+}
 
 - (void)longPressGestureActionWithIndex:(NSIndexPath *)index {
     NSLog(@"%@",index);

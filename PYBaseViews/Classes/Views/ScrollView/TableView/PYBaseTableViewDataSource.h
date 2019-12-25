@@ -89,15 +89,15 @@ NS_INLINE SBaseTabelViewData SBaseTabelViewDataMakeDefault() {
     data.footerWidth = CGFLOAT_MIN;
     
     data.rowType = UITableViewCell.class;
-    data.headerType = UIView.class;
-    data.footerType = UIView.class;
+    data.headerType = UITableViewHeaderFooterView.class;
+    data.footerType = UITableViewHeaderFooterView.class;
     
     data.rowCount = 0;
     data.sectionCount = 1;
     data.key = @"";
     data.rowIdentifier = @"";
-    data.headerIdentifier = @"";
-    data.footerIdentifier = @"";
+    data.headerIdentifier = @"UITableViewHeaderFooterView";
+    data.footerIdentifier = @"UITableViewHeaderFooterView";
     data.isXibCell = false;
     data.cellNibName = @"";
     return data;

@@ -63,15 +63,17 @@ UITableViewDelegate
  获取某个index的y
  
  @param indexPath index
- @return frame.origin.y
+ @return frame
  */
-- (CGFloat) getYIndexPathWithIndexPath: (NSIndexPath *)indexPath;
+- (CGRect) getItemFrameWithIndexPath: (NSIndexPath *)indexPath;
 
 /// 如果是baseTableViewCell
 @property (nonatomic,assign) BOOL isHiddenSeparatorLine;
 @property (nonatomic,assign) CGFloat separatorLineH;
 @property (nonatomic,strong) UIColor *separatorColor;
 @property (nonatomic,assign) UIEdgeInsets separatorLineEdge;
+
+- (void) shouldRecognizeSimultaneouslyWithGestureRecognizer: (BOOL (^)(UIGestureRecognizer *gestureRecognizer, UIGestureRecognizer *otherGestureRecognizer))block;
 @end
 
 NS_ASSUME_NONNULL_END

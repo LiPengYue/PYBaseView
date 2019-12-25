@@ -2,8 +2,8 @@
 //  BaseTableTestCell2.h
 //  Test
 //
-//  Created by 衣二三 on 2019/4/16.
-//  Copyright © 2019 衣二三. All rights reserved.
+//  Created by 李鹏跃 on 2019/8/23.
+//  Copyright © 2019 LiPengYue. All rights reserved.
 //
 
 #import <PYBaseView.h>

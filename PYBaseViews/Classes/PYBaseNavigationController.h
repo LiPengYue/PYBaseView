@@ -1,9 +1,3 @@
-//
-//  PYBaseNavigationController.h
-//  FBSnapshotTestCase
-//
-//  Created by 衣二三 on 2019/8/22.
-//
 
 #import <UIKit/UIKit.h>
 

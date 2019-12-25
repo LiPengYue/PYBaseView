@@ -16,6 +16,7 @@
 #endif
 
 @interface PYBaseTableView()
+<UIScrollViewDelegate>
 /// 已经注册的cell
 @property (nonatomic,strong) NSMutableDictionary *registerCellDic;
 @property (nonatomic,strong) NSMutableDictionary *registerHeaderDic;
@@ -166,8 +167,8 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     
     NSString *key = data.rowIdentifier;
     if (![self.registerCellDic valueForKeyPath:key]) {
-        
         Class class = data.rowType;
+        
         if (data.isXibCell) {
             UINib *nib = [UINib nibWithNibName:NSStringFromClass(data.rowType) bundle:nil];
             [self.tableView registerNib:nib forCellReuseIdentifier:data.rowIdentifier];
@@ -570,8 +571,8 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
 }
 
 - (NSMutableDictionary<NSIndexPath *,NSValue *> *)currentSectionFooterFrameCache {
-    if (!_currentIndexPathFrameCache) {
-        _currentIndexPathFrameCache = [NSMutableDictionary new];
+    if (!_currentSectionFooterFrameCache) {
+        _currentSectionFooterFrameCache = [NSMutableDictionary new];
     }
     return _currentSectionFooterFrameCache;
 }
@@ -586,11 +587,15 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
 - (CGRect) getHeaderFrameWithSection: (NSInteger) section {
     NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:section];
     if (!self.currentSectionHeaderFrameCache[index]) {
-        NSInteger rowCount = [self tableView:self.tableView  numberOfRowsInSection:section-1];
-        section = MAX(section-1,0);
-        NSIndexPath *index = [NSIndexPath indexPathForRow:rowCount - 1 inSection:section];
-        CGFloat y = [self getYIndexPathWithIndexPath:index];
+        
+        // 求上层的footer的frame
+        CGFloat y = 0;
         CGFloat h = [self tableView:self.tableView heightForHeaderInSection:section];
+        if (section == 0) {
+            y = self.tableView.tableHeaderView.frame.size.height + self.tableView.contentInset.top;
+        }else{
+            y = CGRectGetMaxY([self getFooterFrameWithSection:section-1]);
+        }
         self.currentSectionHeaderFrameCache[index] = [NSValue valueWithCGRect:CGRectMake(0, y, self.tableView.frame.size.width, h)];
     }
     return self.currentSectionHeaderFrameCache[index].CGRectValue;
@@ -598,70 +603,54 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
 
 - (CGRect) getFooterFrameWithSection: (NSInteger) section {
     NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:section];
+    CGFloat y = 0;
+    CGFloat h = [self tableView:self.tableView heightForFooterInSection:section];
     if (!self.currentSectionFooterFrameCache[index]) {
         NSInteger rowCount = [self tableView:self.tableView  numberOfRowsInSection:section];
-        NSIndexPath *index = [NSIndexPath indexPathForRow:rowCount - 1 inSection:section];
-        CGFloat y = [self getYIndexPathWithIndexPath:index];
-        CGFloat h = [self tableView:self.tableView heightForFooterInSection:section];
+        if(rowCount <= 0) {
+            y = CGRectGetMaxY([self getHeaderFrameWithSection:section]);
+        }else{
+            NSInteger row = rowCount - 1;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            y = CGRectGetMaxY([self getItemFrameWithIndexPath:indexPath]);
+        }
         self.currentSectionFooterFrameCache[index] = [NSValue valueWithCGRect:CGRectMake(0, y, self.tableView.frame.size.width, h)];
     }
     return self.currentSectionFooterFrameCache[index].CGRectValue;
 }
 
-- (CGFloat) getYIndexPathWithIndexPath: (NSIndexPath *)indexPath {
+- (CGRect) getItemFrameWithIndexPath: (NSIndexPath *)indexPath {
+    
     CGFloat y = 0;
-    if (self.currentIndexPathFrameCache[indexPath] != nil) {
-        y = self.currentIndexPathFrameCache[indexPath].CGRectValue.origin.y;
-    }else{
-        NSInteger section = indexPath.section;
-        NSInteger row = indexPath.row;
-        /// 计算section的header
-        CGFloat currentHeader = 0;
-        CGFloat frontFooter = 0;
-        if (row == 0) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
-            // 计算header高度
-            if (self.currentSectionHeaderFrameCache[indexPath]) {
-                NSValue *currentHeaderRect = self.currentSectionHeaderFrameCache[indexPath];
-                currentHeader = currentHeaderRect.CGRectValue.size.height;
-            }else{
-                currentHeader = [self tableView:self.tableView heightForHeaderInSection:section];
-                self.currentSectionHeaderFrameCache[indexPath] = [NSValue valueWithCGRect:CGRectMake(0, 0, self.tableView.frame.size.width, currentHeader)];
-            }
-            y += currentHeader;
-        }
-        
-        row = indexPath.row - 1;
-        
-        if (row <= 0) {
-            section = MAX(section - 1,0);
-            row = [self tableView:self.tableView numberOfRowsInSection:section] - 1;
-            row = MAX(row,0);
-            // 计算section的footer
-            if (self.currentSectionHeaderFrameCache[indexPath]) {
-                NSValue *currentFooterRect = self.currentSectionFooterFrameCache[indexPath];
-                frontFooter = currentFooterRect.CGRectValue.size.height;
-            }else{
-                frontFooter = [self tableView:self.tableView heightForFooterInSection:section];
-                self.currentSectionFooterFrameCache[indexPath] = [NSValue valueWithCGRect:CGRectMake(0, 0, self.tableView.frame.size.width, frontFooter)];
-            }
-            y += frontFooter;
-        }
-        section = MAX(section, 0);
-        row = MAX(0, row);
-        
-        y += [self getYIndexPathWithIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
-        
-        if (section == 0 && row == 0) {
-            y += self.tableView.contentInset.top;
-            y += self.tableView.tableHeaderView.frame.size.height;
-        }
-        
-        CGFloat currentCellH = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-        self.currentIndexPathFrameCache[indexPath] = [NSValue valueWithCGRect:CGRectMake(0, y, self.tableView.frame.size.width, currentCellH)];
+    CGFloat h = 0;
+    if (indexPath.section < 0) {
+        DLOG(@"\n🌶：getItemFrameWithIndexPath section小于0！！\n");
+        return CGRectZero;
     }
-    return y;
+    if (!self.currentIndexPathFrameCache[indexPath]) {
+        NSInteger rowCount = [self tableView:self.tableView  numberOfRowsInSection:indexPath.section];
+        if (rowCount <= 0 || indexPath.row < 0){
+            y = CGRectGetMaxY([self getHeaderFrameWithSection:indexPath.section]);
+        }
+        else if (rowCount <= indexPath.row) {
+            DLOG(@"\n🌶：getItemFrameWithIndexPath 【rowCount <= indexPath.row】！！\n");
+            y = CGRectGetMinY([self getFooterFrameWithSection:indexPath.section]);
+        }
+        else if (indexPath.row == 0) {
+            y = CGRectGetMaxY([self getHeaderFrameWithSection:indexPath.section]);
+            h = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+        }else if (indexPath.row > 0 && indexPath.row < rowCount){
+            NSIndexPath *frontIndexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
+            y = CGRectGetMaxY([self getItemFrameWithIndexPath:frontIndexPath]);
+            h = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+        }
+        self.currentIndexPathFrameCache[indexPath] = [NSValue valueWithCGRect:CGRectMake(0, y, self.tableView.frame.size.width, h)];
+    }
+    
+    return self.currentIndexPathFrameCache[indexPath].CGRectValue;
 }
 
-
+- (void)shouldRecognizeSimultaneouslyWithGestureRecognizer:(BOOL (^)(UIGestureRecognizer * _Nonnull, UIGestureRecognizer * _Nonnull))block {
+    [self.tableView shouldRecognizeSimultaneouslyWithGestureRecognizerFunc:block];
+}
 @end

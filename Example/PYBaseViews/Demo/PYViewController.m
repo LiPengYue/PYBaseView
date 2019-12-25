@@ -23,6 +23,7 @@
     [super viewDidLoad];
     [self setupView];
     [self registerEvents];
+    
 }
 
 - (void) setupView {

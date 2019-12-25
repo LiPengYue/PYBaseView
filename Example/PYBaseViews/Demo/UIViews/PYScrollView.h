@@ -1,8 +1,8 @@
 //
-//  PYMainTableViewCell.h
+//  PYScrollView.h
 //  PYBaseViews_Example
 //
-//  Created by 李鹏跃 on 2019/8/23.
+//  Created by 衣二三 on 2019/12/25.
 //  Copyright © 2019 LiPengYue. All rights reserved.
 //
 
@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PYMainTableViewCell : UITableViewCell
-@property (nonatomic,copy) NSString *title;
+@interface PYScrollView : UIScrollView
+
 @end
 
 NS_ASSUME_NONNULL_END
