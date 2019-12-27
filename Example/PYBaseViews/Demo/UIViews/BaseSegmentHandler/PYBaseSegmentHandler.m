@@ -17,13 +17,18 @@ UIGestureRecognizerDelegate
 /// 内容是否可以滑动
 @property (nonatomic,assign) BOOL canScrollWithContentScrollView;
 /// self 是否可以滑动
-@property (nonatomic,assign) BOOL canScrollWithSegmentTableView;
+@property (nonatomic,assign) BOOL canScrollWithsegmentScrollView;
 
 @property (nonatomic,assign) CGFloat totalTopSpacing;
 
 @property (nonatomic,strong) NSMutableArray <UIView *> *contentViewArray;
 @property (nonatomic,strong) NSMutableDictionary <NSString *,ScrollViewPanDirectionHandler *> *contentScrollViewHandlerDic;
-@property (nonatomic,strong) ScrollViewPanDirectionHandler *segmentTableViewPanHandler;
+@property (nonatomic,strong) ScrollViewPanDirectionHandler *segmentScrollViewPanHandler;
+
+@property (nonatomic,strong) UIPanGestureRecognizer *panGestureRecognizer;
+
+@property (nonatomic,strong) BaseSegmentContentView *segmentContentViewStrong;
+@property (nonatomic,strong) BaseSegmentTagView *tagViewStrong;
 @end
 
 @implementation PYBaseSegmentHandler
@@ -31,7 +36,9 @@ UIGestureRecognizerDelegate
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.canScrollWithSegmentTableView = true;
+        self.canScrollWithsegmentScrollView = true;
+        self.segmentContentViewStrong = [BaseSegmentContentView new];
+        self.tagViewStrong = [BaseSegmentTagView new];
     }
     return self;
 }
@@ -45,40 +52,37 @@ UIGestureRecognizerDelegate
     return false;
 }
 
-- (void)setSegmentTableView:(UITableView *)segmentTableView {
-    if ([segmentTableView isEqual:self.segmentTableView]) {
-        return;
-    }
-    _segmentTableView = segmentTableView;
-    self.segmentTableViewPanHandler.scrollView = segmentTableView;
+- (void)setSegmentScrollView:(UIScrollView *)segmentScrollView {
+    _segmentScrollView = segmentScrollView;
+    self.segmentScrollViewPanHandler.scrollView = segmentScrollView;
 }
 
-- (ScrollViewPanDirectionHandler *)segmentTableViewPanHandler {
-    if (!_segmentTableViewPanHandler) {
-        _segmentTableViewPanHandler = [ScrollViewPanDirectionHandler new];
+- (ScrollViewPanDirectionHandler *)segmentScrollViewPanHandler {
+    if (!_segmentScrollViewPanHandler) {
+        _segmentScrollViewPanHandler = [ScrollViewPanDirectionHandler new];
         __weak typeof(self)weakSelf = self;
-        [_segmentTableViewPanHandler scrollViewDidScrollCallBack:^(CGPoint lodOffset, CGPoint newOffset) {
-            [weakSelf segmentTableViewDidScroll];
+        [_segmentScrollViewPanHandler scrollViewDidScrollCallBack:^(CGPoint lodOffset, CGPoint newOffset) {
+            [weakSelf segmentScrollViewDidScroll];
         }];
     }
-    return _segmentTableViewPanHandler;
+    return _segmentScrollViewPanHandler;
 }
 
 /// 容器视图滚动
-- (void) segmentTableViewDidScroll {
-    UIScrollView *scrollView = self.segmentTableView;
+- (void) segmentScrollViewDidScroll {
+    UIScrollView *scrollView = self.segmentScrollView;
     CGFloat contentOffset = self.totalTopSpacing;
 
-    if (!self.canScrollWithSegmentTableView && !CGPointEqualToPoint(scrollView.contentOffset, CGPointMake(0, contentOffset))) {
+    if (!self.canScrollWithsegmentScrollView && !CGPointEqualToPoint(scrollView.contentOffset, CGPointMake(0, contentOffset))) {
         // 这里通过固定contentOffset的值，来实现不滚动
         scrollView.contentOffset = CGPointMake(0, contentOffset);
     } else if (scrollView.contentOffset.y > contentOffset) {
         scrollView.contentOffset = CGPointMake(0, contentOffset);
-        self.canScrollWithSegmentTableView = NO;
+        self.canScrollWithsegmentScrollView = NO;
         // 横向内容 开始可以滚动
         self.canScrollWithContentScrollView = true;
     }
-    scrollView.showsVerticalScrollIndicator = self.canScrollWithSegmentTableView;
+    scrollView.showsVerticalScrollIndicator = self.canScrollWithsegmentScrollView;
 }
 
 /// 内容视图滚动
@@ -92,7 +96,7 @@ UIGestureRecognizerDelegate
            /// 内容 禁止 滚动
            self.canScrollWithContentScrollView = NO;
            /// self 开启 滚动
-           self.canScrollWithSegmentTableView = true;
+           self.canScrollWithsegmentScrollView = true;
        }
        scrollView.showsVerticalScrollIndicator = self.canScrollWithContentScrollView;
 }
@@ -154,4 +158,10 @@ UIGestureRecognizerDelegate
     self.totalTopSpacing = self.topSpacing + itemsHeight;
 }
 
+- (void)setTagView:(BaseSegmentTagView *)tagView {
+    
+    
+    _tagViewStrong = tagView;
+    
+}
 @end

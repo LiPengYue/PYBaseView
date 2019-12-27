@@ -34,11 +34,10 @@
 
 }
 
-
-
 - (PYBaseTableTestView *)tableView {
     if (!_tableView) {
         _tableView  = [[PYBaseTableTestView alloc]init];
+        _tableView.tableViewStyle = UITableViewStylePlain;
     }
     return _tableView;
 }

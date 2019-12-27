@@ -24,9 +24,7 @@
 
 @property (nonatomic,assign) SBaseTabelViewData defaultData;
 
-@property (nonatomic,strong) NSMutableDictionary <NSIndexPath *,NSValue *>* currentIndexPathFrameCache;
-@property (nonatomic,strong) NSMutableDictionary <NSIndexPath *,NSValue *>* currentSectionHeaderFrameCache;
-@property (nonatomic,strong) NSMutableDictionary <NSIndexPath *,NSValue *>* currentSectionFooterFrameCache;
+@property (nonatomic,strong) PYBaseScrollItemViewFrameHandler *itemViewFrameHandler;
 
 @end
 /// cellID
@@ -135,9 +133,7 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
 }
 
 - (void) reloadIndexPathFrameCatch {
-    [self.currentIndexPathFrameCache removeAllObjects];
-    [self.currentSectionHeaderFrameCache removeAllObjects];
-    [self.currentSectionFooterFrameCache removeAllObjects];
+    [self.itemViewFrameHandler reloadIndexPathFrameCatch];
 }
 
 // MARK:life cycles
@@ -186,71 +182,6 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-
-//- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(tableView:titleForHeaderInSection:andData:)]) {
-//        SBaseTabelViewData data = [self getDataWithCurrentSection:section andCurrentRow:0];
-//        return [self.tableViewDataSource tableView:tableView titleForHeaderInSection:section andData:data];
-//    }
-//    return nil;
-//}
-//
-//- (nullable NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(tableView:titleForFooterInSection:andData:)]) {
-//        SBaseTabelViewData data = [self getDataWithCurrentSection:section andCurrentRow:0];
-//        return [self.tableViewDataSource tableView:tableView titleForFooterInSection:section andData:data];
-//    }
-//    return nil;
-//}
-
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(tableView:canEditRowAtIndexPath:andData:)]) {
-//        SBaseTabelViewData data = [self getDataWithCurrentSection:indexPath.section andCurrentRow:indexPath.row];
-//        return [self.tableViewDataSource tableView:tableView canEditRowAtIndexPath:indexPath andData:data];
-//    }
-//    return true;
-//}
-
-//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(tableView:canMoveRowAtIndexPath:andData:)]) {
-//
-//        SBaseTabelViewData data = [self getDataWithCurrentSection:indexPath.section andCurrentRow:indexPath.row];
-//        [self.tableViewDataSource tableView:tableView canMoveRowAtIndexPath:indexPath andData:data];
-//    }
-//    return false;
-//}
-
-//- (nullable NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(sectionIndexTitlesForTableView:andData:)]) {
-//        SBaseTabelViewData data = [self getDataWithCurrentSection:0 andCurrentRow:0];
-//     return [self.tableViewDataSource sectionIndexTitlesForTableView:tableView andData:data];
-//    }
-//    return nil;
-//}
-
-//- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(tableView:sectionForSectionIndexTitle:atIndex:andData:)]) {
-//        SBaseTabelViewData data = [self getDataWithCurrentSection:index andCurrentRow:0];
-//        return [self.tableViewDataSource tableView:tableView sectionForSectionIndexTitle:title atIndex:index andData:data];
-//    }
-//    return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
-//}
-
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(tableView:commitEditingStyle:forRowAtIndexPath:andData:)]) {
-//        SBaseTabelViewData data = [self getDataWithCurrentSection:indexPath.section andCurrentRow:indexPath.row];
-//        [self.tableViewDataSource tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath andData:data];
-//    }
-//}
-
-//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-//    if ([self.tableViewDataSource respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:andFromData:andToData:)]) {
-//            SBaseTabelViewData fromData = [self getDataWithCurrentSection:sourceIndexPath.section andCurrentRow:sourceIndexPath.row];
-//        SBaseTabelViewData toData = [self getDataWithCurrentSection:destinationIndexPath.section andCurrentRow:destinationIndexPath.row];
-//        return [self.tableViewDataSource tableView:tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath andFromData:fromData andToData:toData];
-//    }
-//}
-
 
 //MARK: delegate
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -419,7 +350,6 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     }
 }
 
-//// Allows customization of the editingStyle for a particular cell located at 'indexPath'. If not implemented, all editable cells will have UITableViewCellEditingStyleDelete set for them when the table has editing property set to YES.
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.tableViewDelegate respondsToSelector:@selector(tableView:editingStyleForRowAtIndexPath:andData:)]) {
         SBaseTabelViewData data = [self getDataWithCurrentSection:indexPath.section andCurrentRow:indexPath.row];
@@ -427,6 +357,7 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     }
     return UITableViewCellEditingStyleNone;
 }
+
 - (nullable NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.tableViewDelegate respondsToSelector:@selector(tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:andData:)]) {
         SBaseTabelViewData data = [self getDataWithCurrentSection:indexPath.section andCurrentRow:indexPath.row];
@@ -481,6 +412,7 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
         
     }
 }
+
 - (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(nullable NSIndexPath *)indexPath {
     if ([self.tableViewDelegate respondsToSelector:@selector(tableView:didEndEditingRowAtIndexPath:andData:)]) {
         SBaseTabelViewData data = [self getDataWithCurrentSection:indexPath.section andCurrentRow:indexPath.row];
@@ -510,6 +442,7 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     }
     return false;
 }
+
 - (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender NS_AVAILABLE_IOS(5_0) {
     if ([self.tableViewDelegate respondsToSelector:@selector(tableView:canPerformAction:forRowAtIndexPath:withSender:andData:)]) {
         SBaseTabelViewData data = [self getDataWithCurrentSection:indexPath.section andCurrentRow:indexPath.row];
@@ -539,6 +472,7 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     }
     return true;
 }
+
 - (void)tableView:(UITableView *)tableView didUpdateFocusInContext:(UITableViewFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator NS_AVAILABLE_IOS(9_0) {
     if ([self.tableViewDelegate respondsToSelector:@selector(tableView:didUpdateFocusInContext:withAnimationCoordinator:)]) {
         [self.tableViewDelegate tableView:tableView didUpdateFocusInContext:context withAnimationCoordinator:coordinator];
@@ -559,95 +493,42 @@ static NSString *const KBASETABLEVIEWDEFAULTFOOTERID = @"KBASETABLEVIEWDEFAULTFO
     return false;
 }
 
-- (NSDictionary <NSIndexPath *, NSValue *>*) getCurrentIndexPathAnchorPointsCache {
-    return self.currentIndexPathFrameCache;
-}
+// MARK: - get || set
 
-- (NSMutableDictionary<NSIndexPath *,NSValue *> *)currentIndexPathFrameCache {
-    if (!_currentIndexPathFrameCache) {
-        _currentIndexPathFrameCache = [NSMutableDictionary new];
+- (PYBaseScrollItemViewFrameHandler *)itemViewFrameHandler {
+    if (!_itemViewFrameHandler) {
+        _itemViewFrameHandler = [[PYBaseScrollItemViewFrameHandler alloc]initWithScrollView:self.tableView];
+        __weak typeof(self)weakSelf = self;
+        [_itemViewFrameHandler getSectionItemCount:^NSInteger(NSInteger section) {
+            return [weakSelf tableView:weakSelf.tableView
+                 numberOfRowsInSection:section];
+        }];
+        [_itemViewFrameHandler getHeaderH:^CGFloat(NSInteger section) {
+            return [weakSelf tableView:weakSelf.tableView
+              heightForHeaderInSection:section];
+        }];
+        [_itemViewFrameHandler getFooterH:^CGFloat(NSInteger section) {
+            return [weakSelf tableView:weakSelf.tableView
+              heightForFooterInSection:section];
+        }];
+        [_itemViewFrameHandler getItemH:^CGFloat(NSIndexPath * _Nonnull indexPath) {
+            return [weakSelf tableView:weakSelf.tableView
+               heightForRowAtIndexPath:indexPath];
+        }];
     }
-    return _currentIndexPathFrameCache;
-}
-
-- (NSMutableDictionary<NSIndexPath *,NSValue *> *)currentSectionFooterFrameCache {
-    if (!_currentSectionFooterFrameCache) {
-        _currentSectionFooterFrameCache = [NSMutableDictionary new];
-    }
-    return _currentSectionFooterFrameCache;
-}
-
-- (NSMutableDictionary<NSIndexPath *,NSValue *> *)currentSectionHeaderFrameCache {
-    if (!_currentSectionHeaderFrameCache) {
-        _currentSectionHeaderFrameCache = [NSMutableDictionary new];
-    }
-    return _currentSectionHeaderFrameCache;
+    return _itemViewFrameHandler;
 }
 
 - (CGRect) getHeaderFrameWithSection: (NSInteger) section {
-    NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:section];
-    if (!self.currentSectionHeaderFrameCache[index]) {
-        
-        // 求上层的footer的frame
-        CGFloat y = 0;
-        CGFloat h = [self tableView:self.tableView heightForHeaderInSection:section];
-        if (section == 0) {
-            y = self.tableView.tableHeaderView.frame.size.height + self.tableView.contentInset.top;
-        }else{
-            y = CGRectGetMaxY([self getFooterFrameWithSection:section-1]);
-        }
-        self.currentSectionHeaderFrameCache[index] = [NSValue valueWithCGRect:CGRectMake(0, y, self.tableView.frame.size.width, h)];
-    }
-    return self.currentSectionHeaderFrameCache[index].CGRectValue;
+    return [self.itemViewFrameHandler getHeaderFrameWithSection:section];
 }
 
 - (CGRect) getFooterFrameWithSection: (NSInteger) section {
-    NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:section];
-    CGFloat y = 0;
-    CGFloat h = [self tableView:self.tableView heightForFooterInSection:section];
-    if (!self.currentSectionFooterFrameCache[index]) {
-        NSInteger rowCount = [self tableView:self.tableView  numberOfRowsInSection:section];
-        if(rowCount <= 0) {
-            y = CGRectGetMaxY([self getHeaderFrameWithSection:section]);
-        }else{
-            NSInteger row = rowCount - 1;
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-            y = CGRectGetMaxY([self getItemFrameWithIndexPath:indexPath]);
-        }
-        self.currentSectionFooterFrameCache[index] = [NSValue valueWithCGRect:CGRectMake(0, y, self.tableView.frame.size.width, h)];
-    }
-    return self.currentSectionFooterFrameCache[index].CGRectValue;
+    return [self.itemViewFrameHandler getFooterFrameWithSection:section];
 }
 
 - (CGRect) getItemFrameWithIndexPath: (NSIndexPath *)indexPath {
-    
-    CGFloat y = 0;
-    CGFloat h = 0;
-    if (indexPath.section < 0) {
-        DLOG(@"\n🌶：getItemFrameWithIndexPath section小于0！！\n");
-        return CGRectZero;
-    }
-    if (!self.currentIndexPathFrameCache[indexPath]) {
-        NSInteger rowCount = [self tableView:self.tableView  numberOfRowsInSection:indexPath.section];
-        if (rowCount <= 0 || indexPath.row < 0){
-            y = CGRectGetMaxY([self getHeaderFrameWithSection:indexPath.section]);
-        }
-        else if (rowCount <= indexPath.row) {
-            DLOG(@"\n🌶：getItemFrameWithIndexPath 【rowCount <= indexPath.row】！！\n");
-            y = CGRectGetMinY([self getFooterFrameWithSection:indexPath.section]);
-        }
-        else if (indexPath.row == 0) {
-            y = CGRectGetMaxY([self getHeaderFrameWithSection:indexPath.section]);
-            h = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-        }else if (indexPath.row > 0 && indexPath.row < rowCount){
-            NSIndexPath *frontIndexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
-            y = CGRectGetMaxY([self getItemFrameWithIndexPath:frontIndexPath]);
-            h = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-        }
-        self.currentIndexPathFrameCache[indexPath] = [NSValue valueWithCGRect:CGRectMake(0, y, self.tableView.frame.size.width, h)];
-    }
-    
-    return self.currentIndexPathFrameCache[indexPath].CGRectValue;
+    return [self.itemViewFrameHandler getItemFrameWithIndexPath:indexPath];
 }
 
 - (void)shouldRecognizeSimultaneouslyWithGestureRecognizer:(BOOL (^)(UIGestureRecognizer * _Nonnull, UIGestureRecognizer * _Nonnull))block {

@@ -38,6 +38,7 @@ PYBaseTableViewDataSource
 - (NSArray<NSString *> *)dataArray {
     if (!_dataArray) {
         _dataArray = @[
+                        @"PYBaseCollectionViewController",
                        //                       @"PresentViewController",
                        @"PYBaseTableViewController",
                        //                       @"BaseTextViewController",

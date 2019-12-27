@@ -13,6 +13,7 @@ UIGestureRecognizerDelegate
 >
 @property (nonatomic,copy) void(^reloadDataBlock)(void);
 @property (nonatomic,copy) BOOL (^shouldRecognizeSimultaneouslyWithGestureRecognizerBlock)(UIGestureRecognizer *gestureRecognizer, UIGestureRecognizer *otherGestureRecognizer);
+
 @end
 
 @implementation PYTableView

@@ -1,15 +1,15 @@
 //
-//  BaseSegmentTableFooterView.m
+//  BaseSegmentContentView.m
 //  PYBaseViews_Example
 //
-//  Created by 李鹏跃 on 2019/12/24.
-//  Copyright © 2019 Lyman Li. All rights reserved.
+//  Created by 衣二三 on 2019/12/26.
+//  Copyright © 2019 LiPengYue. All rights reserved.
 //
 
-#import "BaseSegmentTableFooterView.h"
-#import "BaseSegmentVcCollectionViewCell.h"
+#import "BaseSegmentContentView.h"
+#import "BaseSegmentContentCollectionViewCell.h"
 
-@interface BaseSegmentTableFooterView()
+@interface BaseSegmentContentView()
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource,
@@ -17,48 +17,42 @@ UIScrollViewDelegate
 >
 @property (nonatomic,strong) NSMutableArray <UIViewController *>*subVcArray;// 暂时不用
 @property (nonatomic,strong) NSMutableDictionary <NSString *,NSString *> *registedDic;
-@property (nonatomic,copy) void(^disappearBlock)(BaseSegmentTableFooterView *segmentView);
-@property (nonatomic,copy) BOOL(^isAppearBlock)(BaseSegmentTableFooterView *segmentView,NSInteger toIndex);
-@property (nonatomic,copy) void(^scrollViewDidScrollBlock)(BaseSegmentTableFooterView *segmentView);
+@property (nonatomic,assign) NSInteger currentSelectedIndexPrivate;
+@property (nonatomic,assign) BOOL isScrollEnable;
 @end
 
-@implementation BaseSegmentTableFooterView
+@implementation BaseSegmentContentView
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-    if (self = [super initWithReuseIdentifier:reuseIdentifier]) {
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
         [self baseSetup];
     }
     return self;
 }
 
 - (void) baseSetup {
-    [self.contentView addSubview:self.collectionView];
+    [self addSubview:self.collectionView];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.collectionView.frame = self.contentView.bounds;
+    self.collectionView.frame = self.bounds;
 }
 
-/// 是否应该 显示下一页 （在翻页之前调用）
-- (void)shouldAppearView:(BOOL(^)(BaseSegmentTableFooterView *segmentView,NSInteger toIndex))isAppearBlock {
-    _isAppearBlock = isAppearBlock;
-}
-
-/// 已经翻页调用
-- (void)disappearView: (void(^)(BaseSegmentTableFooterView *segmentView))disappear {
-    _disappearBlock = disappear;
-}
 
 - (void) scrollToIndex:(NSInteger)index andAnimated: (BOOL)animated {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+    if ([self.delegate respondsToSelector:@selector(shouldAppearView:andToIndex:)]) {
+        BOOL isAppear = [self.delegate shouldAppearView:self andToIndex:index];
+        if (!isAppear) {
+//            self.isScrollEnable = false;
+        }else{
+            self.currentSelectedIndexPrivate = index;
+            self.isScrollEnable = true;
+        }
+    }
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:animated];
 }
-
-/// 左右滑动
-- (void) collectionViewDidScroll: (void(^)(BaseSegmentTableFooterView *segmentView))scroll {
-    _scrollViewDidScrollBlock = scroll;
-}
-
 
 // MARK: delegate || dataSource
 
@@ -79,21 +73,39 @@ UIScrollViewDelegate
     NSString *viewIdenter = [self getIdenterWithIndex:indexPath AndView:view];
     
     if (!self.registedDic[viewIdenter]) {
-        [self.collectionView registerClass:BaseSegmentVcCollectionViewCell.class forCellWithReuseIdentifier:viewIdenter];
+        [self.collectionView registerClass:BaseSegmentContentCollectionViewCell.class forCellWithReuseIdentifier:viewIdenter];
     }
     
-    BaseSegmentVcCollectionViewCell *segmentCell =   (BaseSegmentVcCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:viewIdenter forIndexPath:indexPath];
+    BaseSegmentContentCollectionViewCell *segmentCell =   (BaseSegmentContentCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:viewIdenter forIndexPath:indexPath];
     
-    if ([segmentCell isKindOfClass:BaseSegmentVcCollectionViewCell.class]) {
+    if ([segmentCell isKindOfClass:BaseSegmentContentCollectionViewCell.class]) {
         segmentCell.view = view;
     }
     return segmentCell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(shouldAppearView:andToIndex:)]) {
+        BOOL isAppear = [self.delegate shouldAppearView:self andToIndex:indexPath.row];
+        if (!isAppear) {
+//            self.isScrollEnable = false;
+        }else{
+            self.currentSelectedIndexPrivate = indexPath.row;
+            self.isScrollEnable = true;
+        }
+    }
+}
+
+- (void) collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(didAppearView:andIndex:)]) {
+        [self.delegate didAppearView:self andIndex:self.currentSelectedIndexPrivate];
+    }
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.flowLayout) {
-          return self.flowLayout.itemSize;
-      }
+        return self.flowLayout.itemSize;
+    }
     return self.bounds.size;
 }
 
@@ -106,9 +118,9 @@ UIScrollViewDelegate
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     if (self.flowLayout) {
-          return self.flowLayout.minimumLineSpacing;
-      }
-      return CGFLOAT_MIN;
+        return self.flowLayout.minimumLineSpacing;
+    }
+    return CGFLOAT_MIN;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -116,31 +128,16 @@ UIScrollViewDelegate
         return;
     }
     
-    if (self.scrollViewDidScrollBlock) {
-        self.scrollViewDidScrollBlock(self);
-    }
-    
-    //当前滑动的进度
-    CGFloat indexFloat = scrollView.contentOffset.x / MAX(self.collectionView.contentSize.width, 1);
-    NSInteger frontIndex = self.currentSelectedIndex;
-    NSInteger bottomViewCount = self.subViewArray.count;
-    
-    if (self.isAppearBlock) {
-        NSInteger wellIndex = indexFloat > frontIndex ? 1 : -1;
-        wellIndex += frontIndex;
-
-        if (wellIndex < 0 || wellIndex >= bottomViewCount) {
-            return;
-        }
-        
-        BOOL isAppear = self.isAppearBlock(self,wellIndex);
-        if (!isAppear) {
-            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:wellIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:false];
-            return;
+    if (!self.isScrollEnable && scrollView.tracking) {
+        CGFloat x = self.currentSelectedIndexPrivate * self.collectionView.frame.size.width;
+        if (self.collectionView.contentOffset.x != x) {
+            self.collectionView.contentOffset = CGPointMake(x, 0);
         }
     }
-
-    self.currentSelectedIndex = round(indexFloat);
+    
+    if ([self.delegate respondsToSelector:@selector(collectionViewDidScroll:)]) {
+        [self.delegate collectionViewDidScroll:self];
+    }
 }
 
 // MARK: - get || set
@@ -153,7 +150,7 @@ UIScrollViewDelegate
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.pagingEnabled = YES;
-        [_collectionView registerClass:BaseSegmentVcCollectionViewCell.class forCellWithReuseIdentifier:NSStringFromClass(BaseSegmentVcCollectionViewCell.class)];
+        [_collectionView registerClass:BaseSegmentContentCollectionViewCell.class forCellWithReuseIdentifier:NSStringFromClass(BaseSegmentContentCollectionViewCell.class)];
     }
     return _collectionView;
 }
@@ -180,13 +177,13 @@ UIScrollViewDelegate
     [self.collectionView reloadData];
 }
 
-- (void)setCurrentSelectedIndex:(NSInteger)currentSelectedIndex {
-    if (currentSelectedIndex == _currentSelectedIndex) {
+- (void)setCurrentSelectedIndexPrivate:(NSInteger) currentSelectedIndexPrivate {
+    if (currentSelectedIndexPrivate == _currentSelectedIndexPrivate) {
         return;
     }
     _lastSelectedIndex = self.currentSelectedIndex;
-    _currentSelectedIndex = currentSelectedIndex;
-    
+    _currentSelectedIndexPrivate = currentSelectedIndexPrivate;
+    _currentSelectedIndex = currentSelectedIndexPrivate;
 }
 
 @end

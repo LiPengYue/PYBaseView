@@ -1,5 +1,5 @@
 //
-//  BaseSegmentVcCollectionViewCell.h
+//  BaseSegmentContentCollectionViewCell.h
 //  PYBaseViews_Example
 //
 //  Created by 李鹏跃 on 2019/12/24.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BaseSegmentVcCollectionViewCell : UICollectionViewCell
+@interface BaseSegmentContentCollectionViewCell : UICollectionViewCell
 @property (nonatomic,strong) UIView *view;
 @end
 

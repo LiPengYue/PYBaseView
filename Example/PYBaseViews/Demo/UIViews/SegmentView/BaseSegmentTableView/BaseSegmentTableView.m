@@ -11,6 +11,7 @@
 #import "BaseSegmentTableView.h"
 #import <PYBaseView.h>
 #import "PYBaseSegmentHandler.h"
+
 @interface BaseSegmentTableView()
 <UIGestureRecognizerDelegate>
 
@@ -38,7 +39,7 @@
 - (PYBaseSegmentHandler *)segmentHandler {
     if (!_segmentHandler) {
         _segmentHandler = [PYBaseSegmentHandler new];
-        _segmentHandler.segmentTableView = self.tableView;
+        _segmentHandler.segmentScrollView = self.tableView;
     }
     return _segmentHandler;
 }

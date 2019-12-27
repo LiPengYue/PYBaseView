@@ -25,7 +25,7 @@
 PYBaseTableViewDelegate,
 PYBaseTableViewDataSource,
 PYBaseTableViewCellDelegate,
-BaseSegmentTagTableHeaderViewDelegate
+BaseSegmentTagViewDelegate
 >
 
 @property (nonatomic,strong) NSMutableArray <NSString *>*data1;
@@ -52,14 +52,13 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setupSubViewsFunc1];
+        [self setupSubViewsFunc];
         self.tableViewDelegate = self;
         self.tableViewDataSource = self;
         [self initDataSource];
         // 第3组是横滑内容组
         NSInteger contentViewSection = 3;
         self.topSpacing = [self getHeaderFrameWithSection:contentViewSection].origin.y;
-//        self.itemsHeight = CGRectGetMaxY([self getHeaderFrameWithSection:contentViewSection]) - CGRectGetMinY([self getFooterFrameWithSection:contentViewSection]);
     }
     return self;
 }
@@ -119,7 +118,7 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
         andContentInnerScrollView:webview.scrollView];
 }
 
-- (void) setupSubViewsFunc1 {
+- (void) setupSubViewsFunc {
     
     
     self.data1 = @[@"你的名字"].mutableCopy;
@@ -132,18 +131,6 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
     }
     [self reloadData];
 }
-
-// MARK: handle event
-- (void) registerEventsFunc {
-    
-}
-
-// MARK: lazy loads
-
-// MARK: systom functions
-
-// MARK:life cycles
-
 
 #pragma mark - delegate dataSource
 - (SBaseTabelViewData) getTableViewData:(PYBaseTableView *)baseTableView andCurrentSection:(NSInteger)section andCurrentRow:(NSInteger)row {
@@ -265,14 +252,13 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
     /// 第三种headerView
     if ([BaseSegmentTagTableHeaderView.class isEqual:view.class]) {
         BaseSegmentTagTableHeaderView *header = (BaseSegmentTagTableHeaderView *)view;
-        header.cellStyleData.normalBorderW = 0;
-        header.cellStyleData.selectedBorderW = 1;
-        header.cellStyleData.selectedBorderColor = UIColor.redColor;
-        header.modelArray = @[@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444"];
-        header.delegate = self;
+        header.tagView.cellStyleData.normalBorderW = 0;
+        header.tagView.cellStyleData.selectedBorderW = 1;
+        header.tagView.cellStyleData.selectedBorderColor = UIColor.redColor;
+        header.modelArray = @[@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444"].mutableCopy;
+        header.tagView.delegate = self;
     }
 }
-
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section andData:(SBaseTabelViewData)data {
     if (data.footerType == BaseSegmentTableFooterView.class) {
@@ -283,8 +269,8 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
     }
 }
 
-- (SBaseSegmentTagTableHeaderViewData)baseSegmentGetDataWithRow:(NSInteger)row andSection:(NSInteger)section {
-    SBaseSegmentTagTableHeaderViewData data;
+- (SBaseSegmentTagViewData)baseSegmentGetDataWithRow:(NSInteger)row andSection:(NSInteger)section {
+    SBaseSegmentTagViewData data;
     data.itemSize = CGSizeMake(50, 50);
     return data;
 }

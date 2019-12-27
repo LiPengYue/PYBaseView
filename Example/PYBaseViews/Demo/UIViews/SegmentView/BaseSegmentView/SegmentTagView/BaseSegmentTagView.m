@@ -1,12 +1,13 @@
 //
-//  BaseSegmentTagTableHeaderView.m
+//  BaseSegmentTagView.m
 //  PYBaseViews_Example
 //
-//  Created by 李鹏跃 on 2019/12/24.
-//  Copyright © 2019 Lyman Li. All rights reserved.
+//  Created by 衣二三 on 2019/12/26.
+//  Copyright © 2019 LiPengYue. All rights reserved.
 //
 
-#import "BaseSegmentTagTableHeaderView.h"
+#import "BaseSegmentTagView.h"
+
 
 #ifdef DEBUG
 #    define DLog(...) NSLog(__VA_ARGS__)
@@ -14,7 +15,7 @@
 #    define DLog(...)
 #endif
 
-@interface BaseSegmentTagTableHeaderView()
+@interface BaseSegmentTagView ()
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource,
@@ -26,17 +27,18 @@ UICollectionViewDelegateFlowLayout
 @end
 
 
-@implementation BaseSegmentTagTableHeaderView
+@implementation BaseSegmentTagView
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-    if (self = [super initWithReuseIdentifier:reuseIdentifier]) {
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
         [self baseSetupViews];
     }
     return self;
 }
 
 - (void) baseSetupViews {
-    [self.contentView addSubview:self.collectionView];
+    [self addSubview:self.collectionView];
     self.collectionViewCellClass = BaseSegmentTagCollectionViewCell.class;
 }
 
@@ -55,12 +57,16 @@ UICollectionViewDelegateFlowLayout
     _selectedIndexBlock = block;
 }
 
-- (void)scrollToIndex:(NSInteger)index andAnimated:(BOOL)isAnimated {
+- (void)scrollToIndex:(NSInteger)index
+          andAnimated:(BOOL)isAnimated {
+    
     if (!self.isRepeatSetIndex) {
         if (self.currentSelectedIndex == index) {
             return;
         }
     }
+    index = MIN(self.modelArray.count - 1,index);
+    index = MAX(0,index);
     
     _lastSelectedIndex = self.currentSelectedIndex;
     _currentSelectedIndex = index;
@@ -68,9 +74,10 @@ UICollectionViewDelegateFlowLayout
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     
     if ([self.delegate respondsToSelector:@selector(baseSegmentCustomSelectedIndexAnimationWithCollectionView:andBottomGuidepostView:andCurrentIndexPath:)]) {
-        [self.delegate baseSegmentCustomSelectedIndexAnimationWithCollectionView:self.collectionView
-                                               andBottomGuidepostView:self.bottomGuidepostView
-                                                  andCurrentIndexPath:indexPath];
+        [self.delegate baseSegmentTagView:self
+                           customAnimated:self.collectionView
+                   andBottomGuidepostView:self.bottomGuidepostView
+                      andCurrentIndexPath:indexPath];
     }else{
     
         NSIndexPath *lastSelectedIndexPath = [NSIndexPath indexPathForRow:self.lastSelectedIndex inSection:0];
@@ -120,14 +127,21 @@ UICollectionViewDelegateFlowLayout
     if (self.selectedIndexBlock) {
         isChange = self.selectedIndexBlock(indexPath.row);
     }
+    if ([self.delegate respondsToSelector:@selector(shouldSelectedIndex:)]) {
+        isChange = [self.delegate baseSegmentTagView:self
+                                 shouldSelectedIndex:indexPath.row];
+    }
     if (isChange) {
         [self scrollToIndex:indexPath.row andAnimated:true];
     }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.delegate respondsToSelector:@selector(baseSegmentGetDataWithRow:andSection:)]) {
-        return [self.delegate baseSegmentGetDataWithRow:indexPath.row andSection:indexPath.section].itemSize;
+    if ([self.delegate respondsToSelector:@selector(baseSegmentTagView:andGetDataWithRow:andSection:)]) {
+        return [self.delegate baseSegmentTagView:self
+                
+                               andGetDataWithRow:indexPath.row
+                                      andSection:indexPath.section].itemSize;
     }else{
         DLog(@"\n 🌶：itemSize 没有值\n");
         return CGSizeMake(CGFLOAT_MIN, CGFLOAT_MIN);
@@ -136,7 +150,9 @@ UICollectionViewDelegateFlowLayout
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if ([self.delegate respondsToSelector:@selector(baseSegmentGetDataWithRow:andSection:)]) {
-        return [self.delegate baseSegmentGetDataWithRow:0 andSection:section].insetForSection;
+        return [self.delegate baseSegmentTagView:self
+                               andGetDataWithRow:0
+                                      andSection:section].insetForSection;
     }else{
         DLog(@"\n 🌶：insetForSection 没有值\n");
         return UIEdgeInsetsMake(CGFLOAT_MIN, CGFLOAT_MIN, CGFLOAT_MIN, CGFLOAT_MIN);
@@ -145,7 +161,7 @@ UICollectionViewDelegateFlowLayout
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     if ([self.delegate respondsToSelector:@selector(baseSegmentGetDataWithRow:andSection:)]) {
-        return [self.delegate baseSegmentGetDataWithRow:0 andSection:section].minimumSpacingForSection;
+        return [self.delegate baseSegmentTagView:self andGetDataWithRow:0 andSection:section].minimumSpacingForSection;
     }else{
         DLog(@"\n 🌶：minimumSpacingForSection 没有值\n");
         return CGFLOAT_MIN;
@@ -208,5 +224,4 @@ UICollectionViewDelegateFlowLayout
     _modelArray = modelArray;
     [self.collectionView reloadData];
 }
-
 @end

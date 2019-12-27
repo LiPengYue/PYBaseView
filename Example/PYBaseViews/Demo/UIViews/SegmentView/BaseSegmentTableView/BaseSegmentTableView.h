@@ -10,6 +10,8 @@
 //git: https://github.com/lmf12/MFNestTableView
 
 #import <PYBaseView.h>
+#import "BaseSegmentTagTableHeaderView.h"
+#import "BaseSegmentTableFooterView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
