@@ -1,0 +1,6 @@
+framework module PYBaseColorHandler {
+  umbrella header "PYBaseColorHandler-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,6 +7,7 @@
 //
 
 #import "PYWkWebView.h"
+#import <MJRefresh/MJRefresh.h>
 
 @implementation PYWkWebView
 
@@ -20,7 +21,12 @@
 }
 
 - (void) baseSetup {
-    
+    __weak typeof (self)weakSelf = self;
+    self.scrollView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.scrollView.mj_footer endRefreshing];
+        });
+    }];
 }
 
 @end

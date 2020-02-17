@@ -18,6 +18,12 @@
 #import "PYBaseLabel.h"
 #import "PYBaseTableView.h"
 #import "ScrollViewPanDirectionHandler.h"
+
+#import "PYBaseSegmentCollectionView.h"
+#import "PYBaseSegmentTableView.h"
+#import "PYBaseSegmentContentView.h"
+#import "PYBaseSegmentContentCollectionViewCell.h"
+
 #import "PYBaseSize.h"
 
 

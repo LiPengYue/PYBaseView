@@ -1,0 +1,6 @@
+framework module Pods_PYBaseViews_Tests {
+  umbrella header "Pods-PYBaseViews_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -27,7 +27,7 @@
 }
 
 - (void) baseSetup {
-    self.segmentContentView = [[BaseSegmentContentView alloc]initWithFrame:CGRectZero];
+    self.segmentContentView = [[PYBaseSegmentContentView alloc]initWithFrame:CGRectZero];
     [self.contentView addSubview:self.segmentContentView];
 }
 

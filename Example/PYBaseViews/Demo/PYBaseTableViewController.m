@@ -8,9 +8,13 @@
 
 #import "PYBaseTableViewController.h"
 #import "PYBaseTableTestView.h"
-
+#import <PYTableView.h>
 @interface PYBaseTableViewController ()
-
+<
+UIGestureRecognizerDelegate,
+UITableViewDataSource
+>
+@property (nonatomic,strong) PYTableView *tableView1;
 @property (nonatomic,strong) PYBaseTableTestView *tableView;
 @end
 
@@ -19,19 +23,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
-    self.navBarView.addLeftItemWithTitleAndImg(@"返回",nil);
-    __weak typeof (self)weakSelf = self;
-    [self.navBarView clickLeftButtonFunc:^(UIButton * _Nonnull button, NSInteger index) {
-        [weakSelf.navigationController popViewControllerAnimated:true];
-    }];
-    [self.navBarView reloadView];
+//    self.navBarView.addLeftItemWithTitleAndImg(@"返回",nil);
+//    __weak typeof (self)weakSelf = self;
+//    [self.navBarView clickLeftButtonFunc:^(UIButton * _Nonnull button, NSInteger index) {
+//        [weakSelf.navigationController popViewControllerAnimated:true];
+//    }];
+//    [self.navBarView reloadView];
+//
+//    [self.view addSubview:self.tableView];
+//    self.tableView.frame = CGRectMake(0, PYBaseSize.navTotalH, PYBaseSize.screenW, PYBaseSize.screen_navH);
+//    [self.tableView reloadData];
+//    self.tableView.tableView.estimatedSectionFooterHeight = 0;
+//    self.tableView.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView1 = [[PYTableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    [self.view addSubview:self.tableView1];
+    self.tableView1.delegate = self;
+    self.tableView1.dataSource = self;
     
-    [self.view addSubview:self.tableView];
-    self.tableView.frame = CGRectMake(0, PYBaseSize.navTotalH, PYBaseSize.screenW, PYBaseSize.screen_navH);
-    [self.tableView reloadData];
-    self.tableView.tableView.estimatedSectionFooterHeight = 0;
-    self.tableView.tableView.estimatedSectionHeaderHeight = 0;
+    [self.tableView1 registerClass:UITableViewCell.class forCellReuseIdentifier:@"CELLID"];
+    
+}
 
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return true;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 12;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [tableView dequeueReusableCellWithIdentifier:@"CELLID" forIndexPath:indexPath];
 }
 
 - (PYBaseTableTestView *)tableView {

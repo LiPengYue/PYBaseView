@@ -4,6 +4,7 @@ platform :ios, '8.0'
 
 target 'PYBaseViews_Example' do
   pod 'PYBaseViews', :path => '../'
+  pod 'MJRefresh'
 pod 'PYBaseEventHandler'
   target 'PYBaseViews_Tests' do
     inherit! :search_paths

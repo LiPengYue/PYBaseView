@@ -7,10 +7,10 @@
 //
 
 #import <PYBaseView.h>
-#import "BaseSegmentTableView.h"
+#import "PYBaseSegmentTableView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PYBaseTableTestView : BaseSegmentTableView
+@interface PYBaseTableTestView : PYBaseSegmentTableView
 @property (nonatomic,assign) BOOL isCanScroll;
 @end
 

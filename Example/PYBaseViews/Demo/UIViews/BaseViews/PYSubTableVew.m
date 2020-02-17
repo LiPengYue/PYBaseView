@@ -8,6 +8,8 @@
 
 #import "PYSubTableVew.h"
 #import <PYBaseView.h>
+#import <MJRefresh/MJRefresh.h>
+
 @interface PYSubTableVew()
 <
 UITableViewDelegate,
@@ -35,6 +37,12 @@ UITableViewDataSource
     self.backgroundColor = [self random];
 //    self.bounces = false;
     [self initDataSource];
+    __weak typeof (self)weakSelf = self;
+    self.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.mj_footer endRefreshing];
+        });
+    }];
 }
 
 - (void)initDataSource {

@@ -16,9 +16,8 @@
 #import "BaseTableTestCell3.h"
 #import "BasetableTestHeserFooterView1.h"
 #import "BasetableTestHeserFooterView2.h"
-#import "BaseSegmentTagTableHeaderView.h"
-#import "BaseSegmentTableFooterView.h"
 #import "PYScrollView.h"
+#import "BaseSegmentTagView.h"
 
 @interface PYBaseTableTestView()
 <
@@ -174,11 +173,6 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
         data.rowIdentifier = KBaseTableTestCell3;
         
         data.headerHeight = 60;
-        data.headerIdentifier = NSStringFromClass(BaseSegmentTagTableHeaderView.class);
-        data.headerType = BaseSegmentTagTableHeaderView.class;
-        
-        data.footerType = BaseSegmentTableFooterView.class;
-        data.footerIdentifier = NSStringFromClass(BaseSegmentTableFooterView.class);
         data.footerHeight = PYBaseSize.screen_nav_tabBarH;
         
         data.isXibCell = true;
@@ -249,31 +243,17 @@ static NSString *const KBasetableTestHeserFooterView2 = @"BasetableTestHeserFoot
         }
     }
     
-    /// 第三种headerView
-    if ([BaseSegmentTagTableHeaderView.class isEqual:view.class]) {
-        BaseSegmentTagTableHeaderView *header = (BaseSegmentTagTableHeaderView *)view;
-        header.tagView.cellStyleData.normalBorderW = 0;
-        header.tagView.cellStyleData.selectedBorderW = 1;
-        header.tagView.cellStyleData.selectedBorderColor = UIColor.redColor;
-        header.modelArray = @[@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444",@"111",@"222",@"333",@"444"].mutableCopy;
-        header.tagView.delegate = self;
-    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section andData:(SBaseTabelViewData)data {
-    if (data.footerType == BaseSegmentTableFooterView.class) {
-        BaseSegmentTableFooterView *footer = (BaseSegmentTableFooterView *)view;
-        footer.flowLayout.minimumLineSpacing = 12;
-        footer.subViewArray = self.viewList;
-    }else{
-    }
+//    if (data.footerType == PYBaseSegmentTableFooterView.class) {
+//        PYBaseSegmentTableFooterView *footer = (PYBaseSegmentTableFooterView *)view;
+//        footer.flowLayout.minimumLineSpacing = 12;
+//        footer.subViewArray = self.viewList;
+//    }else{
+//    }
 }
 
-- (SBaseSegmentTagViewData)baseSegmentGetDataWithRow:(NSInteger)row andSection:(NSInteger)section {
-    SBaseSegmentTagViewData data;
-    data.itemSize = CGSizeMake(50, 50);
-    return data;
-}
 
 - (void)longPressGestureActionWithIndex:(NSIndexPath *)index {
     NSLog(@"%@",index);

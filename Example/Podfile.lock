@@ -4,6 +4,7 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
+  - MJRefresh (3.3.1)
   - PYBaseColorHandler (0.1.1)
   - PYBaseEventHandler (0.2.0)
   - PYBaseStringHandler (0.1.1)
@@ -13,12 +14,14 @@ PODS:
 
 DEPENDENCIES:
   - FBSnapshotTestCase
+  - MJRefresh
   - PYBaseEventHandler
   - PYBaseViews (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - FBSnapshotTestCase
+    - MJRefresh
     - PYBaseColorHandler
     - PYBaseEventHandler
     - PYBaseStringHandler
@@ -29,11 +32,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
   PYBaseColorHandler: 27c5875ddfd66672ca47a8d23930fde523720fda
   PYBaseEventHandler: 47b896a33bc5128ffd639746c561401a3797a902
   PYBaseStringHandler: 090d18d116158f49aabff465826c577b1f44f45f
   PYBaseViews: 82e6ed2b93538e51e36c1b3ee3363f24f97a7ef5
 
-PODFILE CHECKSUM: 59f67841553baffec660bfd7be3ec5b787907396
+PODFILE CHECKSUM: f9ef6dd21baca7a3564a41b03f6d7ce98d73d0f4
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

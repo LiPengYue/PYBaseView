@@ -7,7 +7,7 @@
 //
 
 #import "PYSegmentTagsCollectionViewCell.h"
-/// BaseSegmentContentView *segmentContentView
+/// PYBaseSegmentContentView *segmentContentView
 @interface PYSegmentTagsCollectionViewCell()
 <
 BaseSegmentTagViewDelegate
@@ -36,14 +36,7 @@ BaseSegmentTagViewDelegate
 - (BaseSegmentTagView *)tagView {
     if (!_tagView) {
         _tagView = [BaseSegmentTagView new];
-        _tagView.delegate = self;
     }
     return _tagView;
-}
-
-- (SBaseSegmentTagViewData)baseSegmentGetDataWithRow:(NSInteger)row andSection:(NSInteger)section {
-    SBaseSegmentTagViewData data;
-    data.itemSize = CGSizeMake(50, 50);
-    return data;
 }
 @end

@@ -1,0 +1,6 @@
+framework module PYBaseViews {
+  umbrella header "PYBaseViews-umbrella.h"
+
+  export *
+  module * { export * }
+}

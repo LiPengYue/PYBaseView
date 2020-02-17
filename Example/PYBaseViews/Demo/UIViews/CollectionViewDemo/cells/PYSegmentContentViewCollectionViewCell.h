@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PYSegmentContentViewCollectionViewCell : UICollectionViewCell
-@property (nonatomic,strong) BaseSegmentContentView *segmentContentView;
+@property (nonatomic,strong) PYBaseSegmentContentView *segmentContentView;
 @end
 
 NS_ASSUME_NONNULL_END

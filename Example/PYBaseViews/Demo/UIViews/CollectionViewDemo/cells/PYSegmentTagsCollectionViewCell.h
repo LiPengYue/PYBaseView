@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PYBaseSegmentHandler.h"
+#import "BaseSegmentTagView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
